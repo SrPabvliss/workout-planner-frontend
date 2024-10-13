@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { AxiosClient } from '../../../../core/infrastructure/http/axios-client'
 import {
   HomeHeader,
   HomeHero,
@@ -8,6 +9,10 @@ import {
   HomeContact,
   HomeFooter,
 } from '@/features/home/presentation/components'
+
+const getUsers = async () => await AxiosClient.getInstance().get('/users/24')
+
+getUsers()
 </script>
 
 <template>
