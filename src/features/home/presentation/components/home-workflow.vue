@@ -12,7 +12,13 @@ import WorkflowStep from './workflow-step.vue'
         Cómo funciona WorkoutPlanner
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <WorkflowStep :workflowSteps="workflowSteps" />
+        <div
+          v-for="step in workflowSteps"
+          :key="step.title"
+          class="text-center"
+        >
+          <WorkflowStep :step="step" />
+        </div>
       </div>
       <Alert class="mt-8 flex items-center gap-4">
         <div>
