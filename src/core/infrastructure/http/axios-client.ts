@@ -55,8 +55,15 @@ export class AxiosClient implements IHttpHandler {
     url: string,
     config?: AxiosRequestConfig,
   ): Promise<IHttpResponse<T>> {
-    const response = await this.axiosInstance.get<IHttpResponse<T>>(url, config)
-    return response.data
+    try {
+      const response = await this.axiosInstance.get<IHttpResponse<T>>(
+        url,
+        config,
+      )
+      return response.data
+    } catch (e: any) {
+      return e.response.data
+    }
   }
 
   async post<T>(
@@ -64,12 +71,16 @@ export class AxiosClient implements IHttpHandler {
     data?: any,
     config?: AxiosRequestConfig,
   ): Promise<IHttpResponse<T>> {
-    const response = await this.axiosInstance.post<IHttpResponse<T>>(
-      url,
-      data,
-      config,
-    )
-    return response.data
+    try {
+      const response = await this.axiosInstance.post<IHttpResponse<T>>(
+        url,
+        data,
+        config,
+      )
+      return response.data
+    } catch (e: any) {
+      return e.response.data
+    }
   }
 
   async put<T>(
@@ -77,12 +88,16 @@ export class AxiosClient implements IHttpHandler {
     data?: any,
     config?: AxiosRequestConfig,
   ): Promise<IHttpResponse<T>> {
-    const response = await this.axiosInstance.put<IHttpResponse<T>>(
-      url,
-      data,
-      config,
-    )
-    return response.data
+    try {
+      const response = await this.axiosInstance.put<IHttpResponse<T>>(
+        url,
+        data,
+        config,
+      )
+      return response.data
+    } catch (e: any) {
+      return e.response.data
+    }
   }
 
   async patch<T>(
@@ -90,22 +105,30 @@ export class AxiosClient implements IHttpHandler {
     data?: any,
     config?: AxiosRequestConfig,
   ): Promise<IHttpResponse<T>> {
-    const response = await this.axiosInstance.patch<IHttpResponse<T>>(
-      url,
-      data,
-      config,
-    )
-    return response.data
+    try {
+      const response = await this.axiosInstance.patch<IHttpResponse<T>>(
+        url,
+        data,
+        config,
+      )
+      return response.data
+    } catch (e: any) {
+      return e.response.data
+    }
   }
 
   async delete<T>(
     url: string,
     config?: AxiosRequestConfig,
   ): Promise<IHttpResponse<T>> {
-    const response = await this.axiosInstance.delete<IHttpResponse<T>>(
-      url,
-      config,
-    )
-    return response.data
+    try {
+      const response = await this.axiosInstance.delete<IHttpResponse<T>>(
+        url,
+        config,
+      )
+      return response.data
+    } catch (e: any) {
+      return e.response.data
+    }
   }
 }
