@@ -4,6 +4,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import Toast from 'vue-toastification'
+import { plugin, defaultConfig } from '@formkit/vue'
 import 'vue-toastification/dist/index.css'
 
 import './assets/index.css'
@@ -25,6 +26,7 @@ const toastOptions = {
   rtl: false,
 }
 
+app.use(plugin, defaultConfig)
 app.use(Toast, toastOptions)
 app.use(createPinia())
 app.use(router)
