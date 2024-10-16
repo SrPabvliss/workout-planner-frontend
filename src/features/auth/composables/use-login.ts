@@ -1,22 +1,26 @@
-import { ref } from 'vue';
+import { z } from 'zod'
+import { createZodPlugin } from '@formkit/zod'
+import { AuthDataSourceImpl } from '../services/datasource'
 
 export default function useLogin() {
-  const email = ref('');
-  const password = ref('');
-  const rememberMe = ref(false);
+  const zodSchema = z.object({
+    username: z.string().min(1, { message: 'El usuario es requerdido' }),
+    password: z.string().min(1, { message: 'La contraseña es requerida' }),
+    rememberMe: z.boolean().default(false),
+  })
 
-  const onSubmit = () => {
-    console.log('Logging in', {
-      email: email.value,
-      password: password.value,
-      rememberMe: rememberMe.value,
-    });
-  };
+  const [zodPlugin, submitHandler] = createZodPlugin(
+    zodSchema,
+
+    async formData => {
+      const { rememberMe, ...rest } = formData
+      AuthDataSourceImpl.getInstance().login(rest)
+      console.log('Logging in', rememberMe)
+    },
+  )
 
   return {
-    email,
-    password,
-    rememberMe,
-    onSubmit,
-  };
+    zodPlugin,
+    submitHandler,
+  }
 }

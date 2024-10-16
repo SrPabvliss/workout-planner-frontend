@@ -51,6 +51,10 @@ export class AxiosClient implements IHttpHandler {
     }
   }
 
+  getAxiosInstance(): AxiosInstance {
+    return this.axiosInstance
+  }
+
   async get<T>(
     url: string,
     config?: AxiosRequestConfig,

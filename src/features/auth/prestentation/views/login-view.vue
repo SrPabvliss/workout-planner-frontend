@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import LoginForm from '../components/login-form.vue'
+
 </script>
 
 <template>
   <div
     class="flex justify-center items-center min-h-screen bg-gray-100 w-screen"
   >
-    <div class="px-64 w-1/2 flex-2">
+    <div class="lg:px-64 flex-2 md:px-16 md:w-3/4">
       <h2 class="text-3xl font-bold text-gray-800 mb-6">
         Bienvenido de vuelta!
       </h2>
       <LoginForm />
     </div>
     <div
-      class="relative w-3/4 flex justify-end items-end overflow-hidden h-screen"
+      class="relative w-3/4 lg:flex justify-end items-end overflow-hidden h-screen hidden "
     >
       <img
         src="https://lifehacker.com/imagery/articles/01HF2GX0AVRJ8V9V6WVRCWC4P8/hero-image.fill.size_1248x702.v1699834417.jpg"

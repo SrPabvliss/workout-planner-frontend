@@ -13,7 +13,10 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@formkit/addons": "^1.6.7",
+    "@formkit/i18n": "^1.6.7",
     "@formkit/vue": "^1.6.7",
+    "@formkit/zod": "^1.6.7",
     "@radix-icons/vue": "^1.0.0",
     "@vueuse/core": "^11.1.0",
     "axios": "^1.7.7",
@@ -42,6 +45,7 @@
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.13",
+    "tailwindcss-debug-screens": "^2.2.1",
     "typescript": "~5.5.4",
     "vite": "^5.4.8",
     "vite-plugin-vue-devtools": "^7.4.6",

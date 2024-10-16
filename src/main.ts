@@ -4,12 +4,16 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import Toast from 'vue-toastification'
-import { plugin, defaultConfig } from '@formkit/vue'
+import { plugin } from '@formkit/vue'
 import 'vue-toastification/dist/index.css'
+import '@formkit/themes/genesis'
 
 import './assets/index.css'
+import formkitConfig from '../formkit.config'
 
 const app = createApp(App)
+
+const pinia = createPinia()
 
 const toastOptions = {
   position: 'top-right',
@@ -26,9 +30,9 @@ const toastOptions = {
   rtl: false,
 }
 
-app.use(plugin, defaultConfig)
+app.use(plugin, formkitConfig)
 app.use(Toast, toastOptions)
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 
 app.mount('#app')
