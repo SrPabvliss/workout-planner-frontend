@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const handleClick = () => {
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -15,7 +22,11 @@ import { Button } from '@/components/ui/button'
           Gestiona tus rutinas, sigue tu progreso y alcanza tus objetivos
           fitness con WorkoutPlanner.
         </p>
-        <Button class="font-semibold text-lg text-white" size="lg">
+        <Button
+          class="font-semibold text-lg text-white"
+          size="lg"
+          @click="handleClick"
+        >
           Comienza ahora
         </Button>
       </div>

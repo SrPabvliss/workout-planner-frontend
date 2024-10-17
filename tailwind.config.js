@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const animate = require("tailwindcss-animate")
+const debug =  require('tailwindcss-debug-screens')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -11,6 +13,9 @@ module.exports = {
     './components/**/*.{ts,tsx,vue}',
     './app/**/*.{ts,tsx,vue}',
     './src/**/*.{ts,tsx,vue}',
+    './index.html',
+    './formkit.theme.ts',
+    './formkit.config.ts',
 	],
   
   theme: {
@@ -89,5 +94,5 @@ module.exports = {
       },
     },
   },
-  plugins: [animate],
+  plugins: [animate, debug, require('@formkit/themes/tailwindcss')],
 }

@@ -3,12 +3,38 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import Toast from 'vue-toastification'
+import { plugin } from '@formkit/vue'
+import 'vue-toastification/dist/index.css'
+import '@formkit/themes/genesis'
 
 import './assets/index.css'
+import formkitConfig from '../formkit.config'
+import piniaPersistedState from 'pinia-plugin-persistedstate'
 
 const app = createApp(App)
 
-app.use(createPinia())
+const pinia = createPinia()
+pinia.use(piniaPersistedState)
+
+const toastOptions = {
+  position: 'top-right',
+  timeout: 4000,
+  closeOnClick: true,
+  pauseOnFocusLoss: true,
+  pauseOnHover: true,
+  draggable: true,
+  draggablePercent: 0.6,
+  showCloseButtonOnHover: false,
+  hideProgressBar: false,
+  closeButton: 'button',
+  icon: true,
+  rtl: false,
+}
+
+app.use(plugin, formkitConfig)
+app.use(Toast, toastOptions)
+app.use(pinia)
 app.use(router)
 
 app.mount('#app')

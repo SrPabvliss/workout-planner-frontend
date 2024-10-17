@@ -7,18 +7,18 @@ import tailwind from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
 
 export default defineConfig({
-  css:{
+  css: {
     postcss: {
-      plugins: [ tailwind(), autoprefixer() ]
+      plugins: [tailwind(), autoprefixer()],
     },
   },
-  plugins: [
-    vue(),
-    vueDevTools(),
-  ],
+  plugins: [vue(), vueDevTools()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+  define: {
+    'process.env': {},
+  },
 })

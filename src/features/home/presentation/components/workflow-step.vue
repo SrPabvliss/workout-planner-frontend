@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IWorkflowStep } from '../../interfaces/IWorkflowStep'
+import type { IWorkflowStep } from '../../interfaces/IWorkflowStep'
 defineProps<{
   step: IWorkflowStep
 }>()
