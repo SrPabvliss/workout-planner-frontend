@@ -15,6 +15,11 @@ const router = createRouter({
       component: () =>
         import('@/features/auth/prestentation/views/login-view.vue'),
     },
+    {
+      path: '/mail',
+      name: 'mail',
+      component: () => import('@/core/layout/layout-test.vue'),
+    },
   ],
 })
 
