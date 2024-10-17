@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IBenefit } from '../../interfaces/IBenefit'
+import type { IBenefit } from '../../interfaces/IBenefit'
 import { CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
 defineProps<{

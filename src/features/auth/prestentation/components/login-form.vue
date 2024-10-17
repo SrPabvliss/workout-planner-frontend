@@ -20,16 +20,6 @@ const { zodPlugin, submitHandler } = useLogin()
       name="password"
       validation="required"
       />
-    
-    <div class="flex flex-col justify-between items-baseline mb-4">
-      <FormKit
-        type="checkbox"
-        label="Recordarme"
-        name="rememberMe"
-        validation-visibility="dirty"
-      />
-      <a href="#" class="text-sm text-primary hover:underline">Olvidaste tu contraseña?</a>
-    </div>
   </FormKit>
 </template>
 

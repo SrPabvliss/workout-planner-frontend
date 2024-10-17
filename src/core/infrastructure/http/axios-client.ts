@@ -3,6 +3,7 @@ import type {
   IHttpHandler,
   IHttpResponse,
 } from '@/core/interfaces/IHttpHandler'
+import { useAuthStore } from '@/features/auth/context/auth-store'
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import { useToast } from 'vue-toastification'
 
@@ -21,7 +22,15 @@ export class AxiosClient implements IHttpHandler {
       },
     })
 
-    // TODO: Configure access token
+    this.axiosInstance.interceptors.request.use(config => {
+      const authStore = useAuthStore()
+      authStore.loadData()
+      this.accessToken = authStore.token
+      if (this.accessToken) {
+        config.headers.Authorization = `Bearer ${this.accessToken}`
+      }
+      return config
+    })
 
     this.axiosInstance.interceptors.response.use(
       response => {

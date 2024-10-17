@@ -10,10 +10,12 @@ import '@formkit/themes/genesis'
 
 import './assets/index.css'
 import formkitConfig from '../formkit.config'
+import piniaPersistedState from 'pinia-plugin-persistedstate'
 
 const app = createApp(App)
 
 const pinia = createPinia()
+pinia.use(piniaPersistedState)
 
 const toastOptions = {
   position: 'top-right',
