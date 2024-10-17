@@ -2,7 +2,8 @@ import { z } from 'zod'
 import { createZodPlugin } from '@formkit/zod'
 import { AuthDataSourceImpl } from '../services/datasource'
 import router from '@/router'
-import { useAuthStore } from '@/features/auth/context/auth-store'
+import { useModulesStore } from '@/core/context/modules-store'
+import useNavLinks from '@/core/composables/use-navlinks'
 
 export default function useLogin() {
   const zodSchema = z.object({
@@ -17,11 +18,8 @@ export default function useLogin() {
     async formData => {
       const data = await AuthDataSourceImpl.getInstance().login(formData)
       if (!data) return
-      router.push(`/${data.role}`)
-
-      const authStore = useAuthStore()
-
-      authStore.loadData()
+      useModulesStore().setModules(useNavLinks(data.role))
+      router.push({ name: 'dashboard', query: { role: data.role } })
     },
   )
 

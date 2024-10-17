@@ -11,10 +11,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useAuthStore } from '@/features/auth/context/auth-store'
+import router from '@/router'
 import { LogOut, User } from 'lucide-vue-next'
 
 const auth = useAuthStore()
 auth.loadData()
+
+const logout = () => {
+  auth.logout()
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -51,7 +57,7 @@ auth.loadData()
         <User class="mr-2 h-4 w-4" />
         <span>Profile</span>
       </DropdownMenuItem>
-      <DropdownMenuItem class="cursor-pointer">
+      <DropdownMenuItem class="cursor-pointer" @click="logout">
         <LogOut class="mr-2 h-4 w-4" />
         <span>Log out</span>
       </DropdownMenuItem>

@@ -11,7 +11,7 @@ defineProps<{
 
 <template>
   <div class="flex items-center px-4 py-2">
-    <h1 class="text-xl font-bold">{{ title }}</h1>
+    <h1 class="text-xl font-bold ml-4">{{ title }}</h1>
     <div class="ml-auto">
       <div class="flex flex-1 items-center justify-end">
         <ModeToggle />
@@ -20,7 +20,7 @@ defineProps<{
     </div>
   </div>
   <Separator />
-  <ScrollArea class="h-screen flex p-4">
+  <ScrollArea class="h-screen flex p-8">
     <slot name="content">
       <p>Content</p>
     </slot>
