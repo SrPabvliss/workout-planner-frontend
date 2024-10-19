@@ -36,12 +36,10 @@ const router = createRouter({
             ),
         },
         {
-          path: 'usuarios',
-          name: 'usuarios',
+          path: 'estudiantes',
+          name: 'estudiantes',
           component: () =>
-            import(
-              '@/features/dashboard/presentation/views/dashboard-view.vue'
-            ),
+            import('@/features/students/presentation/views/students-view.vue'),
         },
         {
           path: 'comidas',
@@ -67,6 +65,12 @@ const router = createRouter({
               '@/features/dashboard/presentation/views/dashboard-view.vue'
             ),
         },
+        {
+          path: 'perfil',
+          name: 'perfil',
+          component: () =>
+            import('@/features/users/presentation/views/users-view.vue'),
+        }
       ],
     },
   ],

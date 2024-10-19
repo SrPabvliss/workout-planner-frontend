@@ -8,7 +8,7 @@ export default function useNavLinks(roleType: string) {
         label: '',
         icon: 'lucide:user-circle',
         variant: 'ghost',
-        href: 'usuarios',
+        href: 'estudiantes',
       },
       {
         title: 'Comidas',
@@ -30,6 +30,13 @@ export default function useNavLinks(roleType: string) {
         icon: 'lucide:clock',
         variant: 'ghost',
         href: 'rutinas',
+      },
+      {
+        title: 'Mi perfil',
+        label: '',
+        icon: 'lucide:user-circle',
+        variant: 'ghost',
+        href: 'perfil',
       },
     ],
     student: [

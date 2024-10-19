@@ -55,8 +55,10 @@ const determineActiveLink = (link?: string) => {
                     size: 'icon',
                   }),
                   'h-9 w-9',
-                  link.variant === 'default' &&
-                    'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white',
+
+                  determineActiveLink(link.href)
+                    ? 'text-white dark:bg-muted dark:hover:bg-muted dark:hover:text-white'
+                    : 'dark:bg-muted dark:text-muted-foreground',
                 )
               "
               @click.prevent="
@@ -92,6 +94,7 @@ const determineActiveLink = (link?: string) => {
               link.variant === 'default' &&
                 'dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white',
               'justify-start',
+              determineActiveLink(link.href) ? 'text-white' : '',
             )
           "
           @click.prevent="
