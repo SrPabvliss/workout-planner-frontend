@@ -16,7 +16,7 @@ const router = createRouter({
         import('@/features/auth/prestentation/views/login-view.vue'),
     },
     {
-      path: '/dashboard',
+      path: '',
       component: () => import('@/core/layout/layout-view.vue'),
       children: [
         {

@@ -19,7 +19,8 @@ export default function useLogin() {
       const data = await AuthDataSourceImpl.getInstance().login(formData)
       if (!data) return
       useModulesStore().setModules(useNavLinks(data.role))
-      router.push({ name: 'dashboard', query: { role: data.role } })
+      const modules = useModulesStore().modules
+      router.push({ name: modules[0].href, query: { role: data.role } })
     },
   )
 

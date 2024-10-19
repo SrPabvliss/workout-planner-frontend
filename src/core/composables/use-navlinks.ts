@@ -4,14 +4,7 @@ export default function useNavLinks(roleType: string) {
   const links = {
     trainer: [
       {
-        title: 'Dashboard',
-        label: '',
-        icon: 'lucide:home',
-        variant: 'ghost',
-        href: 'dashboard',
-      },
-      {
-        title: 'Usuarios',
+        title: 'Estudiantes',
         label: '',
         icon: 'lucide:user-circle',
         variant: 'ghost',
@@ -40,13 +33,6 @@ export default function useNavLinks(roleType: string) {
       },
     ],
     student: [
-      {
-        title: 'Dashboard',
-        label: '',
-        icon: 'lucide:home',
-        variant: 'default',
-        href: 'dashboard',
-      },
       {
         title: 'Projects',
         label: '',
