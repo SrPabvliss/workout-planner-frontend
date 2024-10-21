@@ -4,7 +4,8 @@ import type { IHttpHandler } from '@/core/interfaces/IHttpHandler'
 import type { ILogin, ILoginResponse } from '../interfaces/ILogin'
 import { jwtDecode } from 'jwt-decode'
 import { useAuthStore } from '@/features/auth/context/auth-store'
-import type { IAccount } from '../interfaces/IAccount'
+import type { IAccount, IApiAccount } from '../interfaces/IAccount'
+import { AccountAdapter } from '../adapters/account-adapter'
 
 interface AuthDataSource {
   login({ username, password }: ILogin): Promise<IAccount>
@@ -37,7 +38,10 @@ export class AuthDataSourceImpl implements AuthDataSource {
 
     if (!data) return data
 
-    const user = jwtDecode<IAccount>(data.access_token)
+    const user = AccountAdapter.mapToAccount(
+      jwtDecode<IApiAccount>(data.access_token),
+    )
+    console.log(user)
     useAuthStore().setToken(data.access_token)
     useAuthStore().setUser(user)
     this.httpClient.setAccessToken(data.access_token)

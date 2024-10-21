@@ -14,7 +14,16 @@ export const API_ROUTES = {
     CREATE: '/students',
     GET_BY_ID: (id: number) => `/students/${id}`,
     GET_ALL_BY_TRAINER: (id: number) => `/students/trainer/${id}`,
+    GET_BY_USER_ID: (id: number) => `/students/user/${id}`,
     UPDATE: (id: number) => `/students/${id}`,
     REMOVE: (id: number) => `/students/${id}`,
+  },
+  TRAINER: {
+    GET_ALL: '/trainers',
+    CREATE: '/trainers',
+    GET_BY_ID: (id: number) => `/trainers/${id}`,
+    GET_BY_USER_ID: (id: number) => `/trainers/user/${id}`,
+    UPDATE: (id: number) => `/trainers/${id}`,
+    REMOVE: (id: number) => `/trainers/${id}`,
   },
 }

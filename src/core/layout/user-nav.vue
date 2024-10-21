@@ -21,6 +21,8 @@ const logout = () => {
   auth.logout()
   router.push('/login')
 }
+
+const { user } = auth
 </script>
 
 <template>
@@ -32,11 +34,11 @@ const logout = () => {
       >
         <Avatar className="h-8 w-8">
           <AvatarImage
-            src="https://api.dicebear.com/9.x/avataaars/svg?style=circle"
+            :src="user?.avatarUrl ? user?.avatarUrl : ''"
             alt="Avatar"
           />
           <AvatarFallback className="bg-transparent">{{
-            `${auth.user?.first_name[0]}${auth.user?.last_name[0]}`
+            `${auth.user?.firstName[0]}${user?.lastName[0]}`
           }}</AvatarFallback>
         </Avatar>
       </Button>

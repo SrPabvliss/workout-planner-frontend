@@ -6,6 +6,7 @@ export interface IUser {
   username: string
   password: string
   email: string
+  avatarUrl?: string
 }
 
 export interface ICreateUser extends Omit<IUser, 'id' | 'password'> {}

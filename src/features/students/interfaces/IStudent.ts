@@ -2,12 +2,22 @@
 import type { ITrainer } from '@/features/trainers/interfaces/ITrainer'
 import type { IUser } from '@/features/users/interfaces/IUser'
 
-export interface IStudent {
+export interface IApiStudent {
   id: number
   height: number
   weight: number
   trained_before: boolean
   medical_conditions: string
+  user: IUser
+  trainer: ITrainer
+}
+
+export interface IStudent {
+  id: number
+  height: number
+  weight: number
+  trainedBefore: boolean
+  medicalConditions: string
   user: IUser
   trainer: ITrainer
 }
