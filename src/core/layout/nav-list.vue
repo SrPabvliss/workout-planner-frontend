@@ -65,7 +65,6 @@ const determineActiveLink = (link?: string) => {
                 link.href &&
                   router.push({
                     name: link.href,
-                    query: route.query,
                   })
               "
             >
@@ -101,7 +100,6 @@ const determineActiveLink = (link?: string) => {
             link.href &&
               router.push({
                 name: link.href,
-                query: route.query,
               })
           "
         >

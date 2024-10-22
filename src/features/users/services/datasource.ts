@@ -1,7 +1,13 @@
 import { API_ROUTES } from '@/core/api/routes/api-routes'
 import { AxiosClient } from '@/core/infrastructure/http/axios-client'
 import type { IHttpHandler } from '@/core/interfaces/IHttpHandler'
-import type { ICreateUser, IUpdateUser, IUser } from '../interfaces/IUser'
+import type {
+  IApiUser,
+  ICreateUser,
+  IUpdateUser,
+  IUser,
+} from '../interfaces/IUser'
+import { UserAdapter } from '../adpaters/user-adapter'
 
 interface UserDataSource {
   getAll(): Promise<IUser[]>
@@ -27,41 +33,39 @@ export class UserDataSourceImpl implements UserDataSource {
   }
 
   async getAll() {
-    const { data } = await this.httpClient.get<IUser[]>(
+    const { data } = await this.httpClient.get<IApiUser[]>(
       API_ROUTES.USERS.GET_ALL,
     )
-    return data
+    return UserAdapter.mapManyToUser(data)
   }
 
   async getById(id: number) {
-    const { data } = await this.httpClient.get<IUser>(
+    const { data } = await this.httpClient.get<IApiUser>(
       API_ROUTES.USERS.GET_BY_ID(id),
     )
-    return data
+    return UserAdapter.mapToUser(data)
   }
 
   async create(user: ICreateUser) {
-    const { data } = await this.httpClient.post<IUser>(
+    const { data } = await this.httpClient.post<IApiUser>(
       API_ROUTES.USERS.CREATE,
       user,
     )
-    return data
+    return UserAdapter.mapToUser(data)
   }
 
   async update(id: number, user: IUpdateUser) {
-    const { data } = await this.httpClient.patch<IUser>(
+    const { data } = await this.httpClient.patch<IApiUser>(
       API_ROUTES.USERS.UPDATE(id),
       user,
     )
-    return data
+    return UserAdapter.mapToUser(data)
   }
 
   async remove(id: number) {
-    const { data } = await this.httpClient.delete<IUser>(
+    const { data } = await this.httpClient.delete<IApiUser>(
       API_ROUTES.USERS.REMOVE(id),
     )
-    return data
+    return UserAdapter.mapToUser(data)
   }
-
-
 }

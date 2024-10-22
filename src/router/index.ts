@@ -70,10 +70,18 @@ const router = createRouter({
           name: 'perfil',
           component: () =>
             import('@/features/users/presentation/views/users-view.vue'),
-        }
+        },
       ],
     },
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  if (from.query.role && !to.query.role) {
+    next({ path: to.path, query: { ...to.query, role: from.query.role } })
+  } else {
+    next()
+  }
 })
 
 export default router
