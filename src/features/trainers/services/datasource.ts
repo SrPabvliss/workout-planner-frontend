@@ -1,8 +1,13 @@
-import { AxiosClient } from "@/core/infrastructure/http/axios-client"
-import type { IHttpHandler } from "@/core/interfaces/IHttpHandler"
-import type { IApiTrainer, ICreateTrainer, ITrainer, IUpdateTrainer } from "../interfaces/ITrainer"
-import { API_ROUTES } from "@/core/api/routes/api-routes"
-import { TrainerAdapter } from "../adapters/trainer-adapter"
+import { AxiosClient } from '@/core/infrastructure/http/axios-client'
+import type { IHttpHandler } from '@/core/interfaces/IHttpHandler'
+import type {
+  IApiTrainer,
+  ICreateTrainer,
+  ITrainer,
+  IUpdateTrainer,
+} from '../interfaces/ITrainer'
+import { API_ROUTES } from '@/core/api/routes/api-routes'
+import { TrainerAdapter } from '../adapters/trainer-adapter'
 
 interface TrainerDataSource {
   getAll(): Promise<ITrainer[]>
@@ -47,12 +52,12 @@ export class TrainerDataSourceImpl implements TrainerDataSource {
       API_ROUTES.TRAINER.GET_BY_USER_ID(id),
     )
     return TrainerAdapter.mapToTrainer(data)
-  } 
+  }
 
   async create(trainer: ICreateTrainer) {
     const { data } = await this.httpClient.post<IApiTrainer>(
       API_ROUTES.TRAINER.CREATE,
-      trainer,
+      TrainerAdapter.mapToApiTrainer(trainer),
     )
     return TrainerAdapter.mapToTrainer(data)
   }
@@ -60,7 +65,7 @@ export class TrainerDataSourceImpl implements TrainerDataSource {
   async update(id: number, trainer: IUpdateTrainer) {
     const { data } = await this.httpClient.patch<IApiTrainer>(
       API_ROUTES.TRAINER.UPDATE(id),
-      trainer,
+      TrainerAdapter.mapToApiTrainer(trainer),
     )
     return TrainerAdapter.mapToTrainer(data)
   }
@@ -71,5 +76,4 @@ export class TrainerDataSourceImpl implements TrainerDataSource {
     )
     return TrainerAdapter.mapToTrainer(data)
   }
-
 }

@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import type { ITrainer } from '@/features/trainers/interfaces/ITrainer'
-import type { IUser } from '@/features/users/interfaces/IUser'
+import type {
+  IApiTrainer,
+  ITrainer,
+} from '@/features/trainers/interfaces/ITrainer'
+import type { IApiUser, IUser } from '@/features/users/interfaces/IUser'
 
 export interface IApiStudent {
   id: number
@@ -8,8 +11,8 @@ export interface IApiStudent {
   weight: number
   trained_before: boolean
   medical_conditions: string
-  user: IUser
-  trainer: ITrainer
+  user: IApiUser
+  trainer: IApiTrainer
 }
 
 export interface IStudent {

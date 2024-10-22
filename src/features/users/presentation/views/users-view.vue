@@ -8,8 +8,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { useRoute } from 'vue-router'
 
 const role = useRoute().query.role as string
-
-const { schema, onSubmit } = useProfileForm(role)
+const { schema, onSubmit, defaultValues } = useProfileForm(role)
 </script>
 
 <template>
@@ -27,8 +26,10 @@ const { schema, onSubmit } = useProfileForm(role)
           </CardHeader>
           <CardContent>
             <AutoForm
+              v-if="defaultValues"
               class="space-y-4"
               :schema="schema"
+              :initial-values="defaultValues"
               @submit="onSubmit"
               :field-config="{
                 firstName: {
@@ -55,7 +56,7 @@ const { schema, onSubmit } = useProfileForm(role)
                     type: 'number',
                   },
                 },
-                medicalConditons: {
+                medicalConditions: {
                   label: 'Condiciones médicas',
                   component: 'textarea',
                 },
@@ -74,9 +75,9 @@ const { schema, onSubmit } = useProfileForm(role)
                 },
               }"
             >
-              <Button type="submit" class="w-full text-white mt-10"
-                >Guardar Cambios</Button
-              >
+              <Button type="submit" class="w-full text-white mt-10">
+                Guardar Cambios
+              </Button>
             </AutoForm>
           </CardContent>
         </Card>

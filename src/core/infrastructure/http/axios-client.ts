@@ -124,6 +124,8 @@ export class AxiosClient implements IHttpHandler {
         data,
         config,
       )
+      console.log('response', response)
+
       return response.data
     } catch (e: any) {
       return e.response.data

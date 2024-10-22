@@ -59,13 +59,14 @@ export class StudentDataSourceImpl implements StudentDataSource {
     const { data } = await this.httpClient.get<IApiStudent>(
       API_ROUTES.STUDENTS.GET_BY_USER_ID(id),
     )
+    console.log('data', data)
     return StudentAdapter.mapToStudent(data)
   }
 
   async create(student: ICreateStudent) {
     const { data } = await this.httpClient.post<IApiStudent>(
       API_ROUTES.STUDENTS.CREATE,
-      student,
+      StudentAdapter.mapToApiStudent(student),
     )
     return StudentAdapter.mapToStudent(data)
   }
@@ -73,7 +74,7 @@ export class StudentDataSourceImpl implements StudentDataSource {
   async update(id: number, student: IUpdateStudent) {
     const { data } = await this.httpClient.patch<IApiStudent>(
       API_ROUTES.STUDENTS.UPDATE(id),
-      student,
+      StudentAdapter.mapToApiStudent(student),
     )
     return StudentAdapter.mapToStudent(data)
   }

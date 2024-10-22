@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import type { IUser } from '@/features/users/interfaces/IUser'
+import type { IApiUser, IUser } from '@/features/users/interfaces/IUser'
 
 export interface IApiTrainer {
   id: number
   specialization: string
   years_of_experience: number
-  user: IUser
+  user: IApiUser
 }
 
 export interface ITrainer {

@@ -41,7 +41,6 @@ export class AuthDataSourceImpl implements AuthDataSource {
     const user = AccountAdapter.mapToAccount(
       jwtDecode<IApiAccount>(data.access_token),
     )
-    console.log(user)
     useAuthStore().setToken(data.access_token)
     useAuthStore().setUser(user)
     this.httpClient.setAccessToken(data.access_token)
