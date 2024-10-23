@@ -1,25 +1,20 @@
 <script setup lang="ts">
+import { AutoForm } from '@/components/ui/auto-form'
+import { Button } from '@/components/ui/button'
 import useLogin from '../../composables/use-login'
 
-const { zodPlugin, submitHandler } = useLogin()
+const { onSubmit, schema } = useLogin()
 </script>
 
 <template>
-  <FormKit id="form" type="form" :plugins="[zodPlugin]" @submit="submitHandler">
-    <FormKit
-      name="username"
-      type="text"
-      label="Usuario"
-      validation-visibility="dirty"
-      validation="required"
-    />
-    <FormKit
-      type="password"
-      label="Contraseña"
-      validation-visibility="dirty"
-      name="password"
-      validation="required"
-      />
-  </FormKit>
+  <AutoForm
+    class="space-y-6"
+    :schema="schema"
+    @submit="onSubmit"
+    :field-config="{
+      password: { inputProps: { type: 'password' } },
+    }"
+  >
+    <Button type="submit" class="text-white"> Iniciar sesión </Button>
+  </AutoForm>
 </template>
-
