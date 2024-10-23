@@ -63,6 +63,7 @@ export const getCurrentUser = async () => {
 
 export default function useProfileUpdate(role: string) {
   const toast = useToast()
+  const { user, setUser } = useAuthStore()
 
   const schema =
     role === 'student'
@@ -115,17 +116,29 @@ export default function useProfileUpdate(role: string) {
     }
 
     if (role === 'student') {
-      console.log('update student')
       await StudentDataSourceImpl.getInstance().update(
         userId.value!,
         changedFields,
       )
+
+      if (user) {
+        setUser({
+          ...user,
+          ...changedFields,
+        })
+      }
     } else {
-      console.log('update trainer')
       await TrainerDataSourceImpl.getInstance().update(
         userId.value!,
         changedFields,
       )
+
+      if (user) {
+        setUser({
+          ...user,
+          ...changedFields,
+        })
+      }
     }
 
     originalData.value = { ...formData }

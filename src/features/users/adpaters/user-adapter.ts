@@ -1,3 +1,4 @@
+import { toSnakeCase } from '@/lib/case-converter'
 import type { IApiUser, IUser } from '../interfaces/IUser'
 
 export class UserAdapter {
@@ -17,19 +18,7 @@ export class UserAdapter {
     return apiUsers.map(user => UserAdapter.mapToUser(user))
   }
 
-  static mapToApiUser(user: IUser): IApiUser {
-    return {
-      id: user.id,
-      first_name: user.firstName,
-      last_name: user.lastName,
-      username: user.username,
-      password: user.password,
-      email: user.email,
-      avatar_url: user.avatarUrl,
-    }
-  }
-
-  static mapToApiUsers(users: IUser[]): IApiUser[] {
-    return users.map(user => UserAdapter.mapToApiUser(user))
+  static mapToApiUser(user: Partial<IUser>): Partial<IApiUser> {
+    return toSnakeCase(user) as Partial<IApiUser>
   }
 }

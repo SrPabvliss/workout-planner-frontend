@@ -5,7 +5,6 @@ import { toSnakeCase } from '@/lib/case-converter'
 
 export class StudentAdapter {
   static mapToStudent(apiStudent: IApiStudent): IStudent {
-    console.log('apiStudent', apiStudent)
     return {
       id: apiStudent.id,
       height: apiStudent.height,

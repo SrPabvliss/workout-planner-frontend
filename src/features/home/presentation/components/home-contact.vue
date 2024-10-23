@@ -12,7 +12,6 @@ const form = reactive({
 })
 
 const handleSubmit = () => {
-  console.log('Formulario enviado:', form)
   form.name = ''
   form.email = ''
   form.message = ''

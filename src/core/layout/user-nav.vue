@@ -36,6 +36,7 @@ const { user } = auth
           <AvatarImage
             :src="user?.avatarUrl ? user?.avatarUrl : ''"
             alt="Avatar"
+            class="rounded-full"
           />
           <AvatarFallback className="bg-transparent">{{
             `${auth.user?.firstName[0]}${user?.lastName[0]}`

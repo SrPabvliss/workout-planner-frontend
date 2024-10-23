@@ -49,7 +49,7 @@ export class UserDataSourceImpl implements UserDataSource {
   async create(user: ICreateUser) {
     const { data } = await this.httpClient.post<IApiUser>(
       API_ROUTES.USERS.CREATE,
-      user,
+      UserAdapter.mapToApiUser(user),
     )
     return UserAdapter.mapToUser(data)
   }
@@ -57,7 +57,7 @@ export class UserDataSourceImpl implements UserDataSource {
   async update(id: number, user: IUpdateUser) {
     const { data } = await this.httpClient.patch<IApiUser>(
       API_ROUTES.USERS.UPDATE(id),
-      user,
+      UserAdapter.mapToApiUser(user),
     )
     return UserAdapter.mapToUser(data)
   }
