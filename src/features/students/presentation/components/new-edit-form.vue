@@ -114,7 +114,7 @@ const { schema, onSubmit, defaultValues, mode } = useStudentForm(props.student)
             </div>
 
             <div class="flex justify-end mt-6">
-              <Button type="submit" class="w-full md:w-auto">
+              <Button type="submit" class="w-full md:w-auto text-white">
                 {{ mode === 'edit' ? 'Actualizar' : 'Crear' }} Estudiante
               </Button>
             </div>

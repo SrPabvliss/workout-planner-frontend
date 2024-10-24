@@ -14,13 +14,13 @@ const { schema, onSubmit, defaultValues } = useProfileForm(role)
 <template>
   <ContentLayout :title="`Mi perfil`">
     <template #content>
-      <div class="flex gap-4 w-full">
-        <Card class="flex-1">
+      <div class="flex flex-col lg:flex-row gap-4 w-full">
+        <Card class="w-full lg:w-1/2">
           <CardContent>
             <AvatarSelector />
           </CardContent>
         </Card>
-        <Card class="flex-1">
+        <Card class="w-full lg:w-1/2">
           <CardHeader>
             <h2 class="text-xl font-bold">Datos Personales</h2>
           </CardHeader>

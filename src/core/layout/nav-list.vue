@@ -21,9 +21,10 @@ export interface LinkProp {
 interface NavProps {
   isCollapsed: boolean
   links: LinkProp[]
+  onNavigate?: () => void
 }
 
-defineProps<NavProps>()
+const props = defineProps<NavProps>()
 
 const route = useRoute()
 
@@ -31,6 +32,13 @@ const determineActiveLink = (link?: string) => {
   if (!link) return false
   const currentModule = route.path.split('/').pop()
   return currentModule && currentModule.toUpperCase() === link.toUpperCase()
+}
+
+const handleNavigation = (href?: string) => {
+  if (href) {
+    router.push({ name: href })
+    props.onNavigate?.()
+  }
 }
 </script>
 
@@ -61,12 +69,7 @@ const determineActiveLink = (link?: string) => {
                     : 'dark:bg-muted dark:text-muted-foreground',
                 )
               "
-              @click.prevent="
-                link.href &&
-                  router.push({
-                    name: link.href,
-                  })
-              "
+              @click.prevent="link.href && handleNavigation(link.href)"
             >
               <Icon :icon="link.icon" class="size-4" />
               <span class="sr-only">{{ link.title }}</span>
@@ -96,12 +99,7 @@ const determineActiveLink = (link?: string) => {
               determineActiveLink(link.href) ? 'text-white' : '',
             )
           "
-          @click.prevent="
-            link.href &&
-              router.push({
-                name: link.href,
-              })
-          "
+          @click.prevent="link.href && handleNavigation(link.href)"
         >
           <Icon :icon="link.icon" class="mr-2 size-4" />
           {{ link.title }}

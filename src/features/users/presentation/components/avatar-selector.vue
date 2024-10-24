@@ -24,14 +24,14 @@ const {
 </script>
 
 <template>
-  <div class="avatar-selector flex flex-col gap-4 justify-center">
+  <div class="avatar-selector flex flex-col gap-4">
     <div
-      class="preview mb-4 p-5 flex flex-col items-center justify-center rounded-lg border mt-8 bg-white/80"
+      class="preview mb-4 p-3 md:p-5 flex flex-col items-center justify-center rounded-lg border mt-4 md:mt-8 bg-white/80"
     >
       <img
         :src="avatarUrl"
         alt="Avatar Preview"
-        class="w-96 h-96 rounded-full"
+        class="w-48 h-48 md:w-72 md:h-72 lg:w-96 lg:h-96 rounded-full"
       />
 
       <Button
@@ -45,9 +45,9 @@ const {
       </Button>
     </div>
 
-    <div class="controls grid grid-cols-2 gap-4">
-      <div v-for="category in categories" :key="category.id">
-        <Label>
+    <div class="controls grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+      <div v-for="category in categories" :key="category.id" class="w-full">
+        <Label class="text-sm">
           {{ category.spanishLabel }}
         </Label>
 
@@ -58,7 +58,7 @@ const {
           @update:model-value="updateOption(category.id as any, $event)"
           :disabled="!category.options.length || isSaving"
         >
-          <SelectTrigger class="w-full">
+          <SelectTrigger class="w-full mt-1">
             <SelectValue :placeholder="category.label" />
           </SelectTrigger>
           <SelectContent>
@@ -68,14 +68,15 @@ const {
                 v-for="option in category.options"
                 :key="option.id"
                 :value="option.value"
+                class="cursor-pointer"
               >
                 <div class="flex items-center gap-2">
                   <div
                     v-if="category.id.includes('Color')"
-                    class="w-4 h-4 rounded-full"
+                    class="w-4 h-4 rounded-full shrink-0"
                     :style="{ backgroundColor: `#${option.value}` }"
                   />
-                  {{ option.label }}
+                  <span class="truncate">{{ option.label }}</span>
                 </div>
               </SelectItem>
             </SelectGroup>

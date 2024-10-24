@@ -1,38 +1,93 @@
+<!-- layout-view.vue -->
 <script lang="ts" setup>
 import { Separator } from '@/components/ui/separator'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import Nav from './nav-list.vue'
 import Button from '@/components/ui/button/Button.vue'
-import { ChevronLeft, Dumbbell } from 'lucide-vue-next'
+import { ChevronLeft, Dumbbell, Menu } from 'lucide-vue-next'
 import { useModulesStore } from '../context/modules-store'
+import { Sheet, SheetContent } from '@/components/ui/sheet'
 
-interface Props {
-  defaultCollapsed?: boolean
-  collapsedWidth?: number
-  expandedWidth?: number
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  defaultCollapsed: false,
-  collapsedWidth: 64,
-  expandedWidth: 240,
-})
+const props = withDefaults(
+  defineProps<{
+    defaultCollapsed?: boolean
+    collapsedWidth?: number
+    expandedWidth?: number
+  }>(),
+  {
+    defaultCollapsed: false,
+    collapsedWidth: 64,
+    expandedWidth: 240,
+  },
+)
 
 const isCollapsed = ref(props.defaultCollapsed)
+const isMobile = ref(false)
+const isMenuOpen = ref(false)
 const store = useModulesStore()
 store.loadModules()
 
 function toggleCollapse() {
   isCollapsed.value = !isCollapsed.value
 }
+
+const checkIfMobile = () => {
+  isMobile.value = window.innerWidth < 768
+  if (isMobile.value) {
+    isCollapsed.value = true
+  }
+}
+
+onMounted(() => {
+  checkIfMobile()
+  window.addEventListener('resize', checkIfMobile)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkIfMobile)
+})
+
+const closeMenu = () => {
+  isMenuOpen.value = false
+}
 </script>
 
 <template>
   <TooltipProvider :delay-duration="0">
     <div class="flex h-screen">
+      <Button
+        v-if="isMobile"
+        variant="ghost"
+        size="icon"
+        class="fixed top-4 left-4 z-50 md:hidden"
+        @click="isMenuOpen = true"
+      >
+        <Menu class="h-6 w-6" />
+      </Button>
+
+      <Sheet :open="isMenuOpen" @update:open="isMenuOpen = $event">
+        <SheetContent side="left" class="w-[300px] p-0">
+          <aside class="h-full">
+            <div class="flex h-[52px] items-center px-6">
+              <Dumbbell :size="24" class="mr-2 text-primary" />
+              <h1 class="font-bold text-lg">FIT ME</h1>
+            </div>
+            <Separator />
+            <div class="flex-1 overflow-auto">
+              <Nav
+                :is-collapsed="false"
+                :links="store.modules"
+                :onNavigate="closeMenu"
+              />
+            </div>
+          </aside>
+        </SheetContent>
+      </Sheet>
+
       <aside
+        v-show="!isMobile"
         :class="
           cn(
             'transition-all duration-300 ease-in-out flex flex-col relative',
@@ -43,8 +98,8 @@ function toggleCollapse() {
         <div
           :class="
             cn(
-              'flex h-[52px] items-center justify-center',
-              isCollapsed ? 'justify-center' : 'px-2',
+              'flex h-[52px] items-center',
+              isCollapsed ? 'justify-center' : 'px-6',
             )
           "
         >
@@ -72,10 +127,10 @@ function toggleCollapse() {
         </Button>
       </aside>
 
-      <Separator orientation="vertical" />
+      <Separator orientation="vertical" v-if="!isMobile" />
 
       <div class="flex-1 overflow-hidden flex flex-col">
-        <div class="flex-1 overflow-clip">
+        <div class="flex-1 overflow-clip" :class="isMobile ? 'pt-16' : ''">
           <router-view></router-view>
         </div>
       </div>
