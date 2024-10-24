@@ -25,6 +25,8 @@ export interface IStudent {
   trainer: ITrainer
 }
 
-export interface ICreateStudent extends Omit<IStudent, 'id'> {}
+export interface ICreateStudent extends Omit<IStudent, 'id' | 'trainer'> {
+  trainer: number
+}
 
 export interface IUpdateStudent extends Partial<ICreateStudent> {}

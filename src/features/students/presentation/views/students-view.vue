@@ -1,15 +1,3 @@
-<template>
-  <ContentLayout :title="'Estudiantes'">
-    <template #content>
-      <div class="space-y-4 mt-0 pt-0">
-        <StudentBreadcrumb :breadcrumbItems="breadcrumbItems" />
-        <StudentsSearchBar v-model="searchQuery" @search="onSearch" />
-        <StudentGrid :students="filteredStudents" @addStudent="addStudent" />
-      </div>
-    </template>
-  </ContentLayout>
-</template>
-
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useStudents } from '../../composable/use-students-view'
@@ -22,7 +10,7 @@ const { students, addStudent } = useStudents()
 const searchQuery = ref('')
 
 const breadcrumbItems = ref([
-  { label: 'Todos los estudiantes', href: '/estudiantes' },
+  { label: 'Todos los estudiantes', href: 'estudiantes', current: true },
 ])
 
 const filteredStudents = computed(() =>
@@ -37,3 +25,15 @@ const onSearch = (query: string) => {
   searchQuery.value = query
 }
 </script>
+
+<template>
+  <ContentLayout :title="'Estudiantes'">
+    <template #content>
+      <div class="space-y-4 mt-0 pt-0">
+        <StudentBreadcrumb :breadcrumbItems="breadcrumbItems" />
+        <StudentsSearchBar v-model="searchQuery" @search="onSearch" />
+        <StudentGrid :students="filteredStudents" @addStudent="addStudent" />
+      </div>
+    </template>
+  </ContentLayout>
+</template>

@@ -16,7 +16,7 @@ const router = createRouter({
         import('@/features/auth/prestentation/views/login-view.vue'),
     },
     {
-      path: '',
+      path: '/dashboard',
       component: () => import('@/core/layout/layout-view.vue'),
       children: [
         {
@@ -40,6 +40,18 @@ const router = createRouter({
           name: 'estudiantes',
           component: () =>
             import('@/features/students/presentation/views/students-view.vue'),
+        },
+        {
+          path: 'estudiantes/nuevo',
+          name: 'newStudent',
+          component: () =>
+            import('@/features/students/presentation/views/new-student.vue'),
+        },
+        {
+          path: 'estudiantes/editar/:id',
+          name: 'editStudent',
+          component: () =>
+            import('@/features/students/presentation/views/edit-student.vue'),
         },
         {
           path: 'comidas',
