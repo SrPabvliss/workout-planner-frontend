@@ -17,7 +17,7 @@ export default function useLogin() {
 
     password: z
       .string({ required_error: 'La contraseña es requerida.' })
-      .min(8, { message: 'La contraseña debe tener al menos 8 caracteres.' }),
+      .min(3, { message: 'La contraseña debe tener al menos 3 caracteres.' }),
   })
 
   async function onSubmit(formData: LoginForm) {
