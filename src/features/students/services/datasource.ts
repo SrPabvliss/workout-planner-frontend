@@ -38,6 +38,7 @@ export class StudentDataSourceImpl implements StudentDataSource {
     const { data } = await this.httpClient.get<IApiStudent[]>(
       API_ROUTES.STUDENTS.GET_ALL,
     )
+    console.log(data)
     return StudentAdapter.mapManyToStudent(data)
   }
 
