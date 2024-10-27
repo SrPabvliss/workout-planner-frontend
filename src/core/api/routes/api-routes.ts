@@ -26,4 +26,12 @@ export const API_ROUTES = {
     UPDATE: (id: number) => `/trainers/${id}`,
     REMOVE: (id: number) => `/trainers/${id}`,
   },
+  CATEGORIES: {
+    GET_ALL: '/categories',
+    CREATE: '/categories',
+    GET_BY_ID: (id: number) => `/categories/${id}`,
+    GET_BY_TYPE: (type: string) => `/categories/type/${type}`,
+    UPDATE: (id: number) => `/categories/${id}`,
+    REMOVE: (id: number) => `/categories/${id}`,
+  },
 }

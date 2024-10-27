@@ -1,5 +1,10 @@
 import { UserAdapter } from '@/features/users/adpaters/user-adapter'
-import type { IApiStudent, IStudent } from '../interfaces/IStudent'
+import type {
+  IApiStudent,
+  ICreateStudent,
+  IStudent,
+  IUpdateStudent,
+} from '../interfaces/IStudent'
 import { TrainerAdapter } from '@/features/trainers/adapters/trainer-adapter'
 import { toSnakeCase } from '@/lib/case-converter'
 
@@ -20,7 +25,9 @@ export class StudentAdapter {
     return apiStudents.map(student => StudentAdapter.mapToStudent(student))
   }
 
-  static mapToApiStudent(student: Partial<IStudent>): Partial<IApiStudent> {
+  static mapToApiStudent(
+    student: Partial<IStudent> | ICreateStudent | IUpdateStudent,
+  ): Partial<IApiStudent> {
     return toSnakeCase(student) as Partial<IApiStudent>
   }
 }
