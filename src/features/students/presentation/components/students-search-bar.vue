@@ -11,7 +11,6 @@
 <script setup lang="ts">
 import { Input } from '@/components/ui/input'
 import { ref, watch } from 'vue'
-import { defineEmits, defineProps } from 'vue'
 
 const props = defineProps({
   modelValue: {

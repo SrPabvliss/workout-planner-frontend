@@ -1,9 +1,9 @@
 <template>
   <Card
     @click="handleClick"
-    class="cursor-pointer transition-all duration-200 hover:shadow-lg"
+    class="cursor-pointer transition-all duration-200 hover:shadow-lg group relative overflow-hidden"
     :class="{
-      'min-h-[11rem]': isAddCard,
+      'min-h-[11rem] border-dashed': isAddCard,
       'hover:bg-gray-50 dark:hover:bg-slate-800': isAddCard,
       'hover:scale-[1.02]': !isAddCard,
     }"
@@ -12,39 +12,67 @@
       v-if="isAddCard"
       class="h-full flex flex-col items-center justify-center space-y-3"
     >
-      <Plus class="h-8 w-8 text-gray-400" />
+      <div class="bg-gray-100 dark:bg-gray-800 rounded-full p-4">
+        <UserPlus class="h-8 w-8 text-gray-400" />
+      </div>
       <CardTitle class="text-center text-gray-600 dark:text-gray-400">
-        Agrega un nuevo estudiante
+        Agregar nuevo estudiante
       </CardTitle>
     </CardHeader>
 
-    <CardHeader v-else class="p-4">
-      <div class="flex flex-col sm:flex-row items-center gap-4">
-        <Avatar class="h-24 w-24 sm:h-32 sm:w-32 shrink-0">
-          <AvatarImage :src="student.user.avatarUrl!" />
-          <AvatarFallback>
-            {{ `${student.user.firstName[0]}${student.user.lastName[0]}` }}
-          </AvatarFallback>
-        </Avatar>
-
-        <div class="flex-1 min-w-0 text-center sm:text-left">
-          <CardTitle class="text-xl sm:text-2xl truncate">
-            {{ `${student.user.firstName} ${student.user.lastName}` }}
-          </CardTitle>
-          <CardDescription
-            class="flex items-center justify-center sm:justify-start gap-2 mt-1"
+    <CardHeader v-else class="p-6">
+      <div class="flex flex-col sm:flex-row gap-6">
+        <div class="flex flex-col items-center sm:items-start space-y-2">
+          <Avatar
+            class="h-24 w-24 sm:h-32 sm:w-32 ring-2 ring-offset-2 ring-offset-background ring-primary/20"
           >
-            <span class="truncate">@{{ student.user.username }}</span>
-          </CardDescription>
-          <div
-            class="flex items-center justify-center sm:justify-start gap-2 mt-2"
-          >
-            <Badge
-              variant="outline"
-              class="flex items-center gap-1 justify-center max-w-full"
+            <AvatarImage :src="student.user.avatarUrl!" />
+            <AvatarFallback
+              class="text-2xl font-semibold bg-gradient-to-br from-primary/80 to-primary text-white"
             >
-              <Mail class="h-3 w-3 shrink-0" />
+              {{ `${student.user.firstName[0]}${student.user.lastName[0]}` }}
+            </AvatarFallback>
+          </Avatar>
+        </div>
+
+        <div class="flex-1 min-w-0 space-y-4">
+          <div>
+            <CardTitle class="text-2xl font-bold truncate">
+              {{ `${student.user.firstName} ${student.user.lastName}` }}
+            </CardTitle>
+            <CardDescription class="text-base mt-1">
+              @{{ student.user.username }}
+            </CardDescription>
+          </div>
+
+          <div class="grid grid-cols-1 gap-3">
+            <div class="flex items-center gap-2 text-sm text-muted-foreground">
+              <Mail class="h-4 w-4 shrink-0" />
               <span class="truncate">{{ student.user.email }}</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm text-muted-foreground">
+              <Scale class="h-4 w-4 shrink-0" />
+              <span>{{ student.weight }}kg</span>
+              <span class="mx-1">•</span>
+              <Ruler class="h-4 w-4 shrink-0" />
+              <span>{{ student.height }}cm</span>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <Badge
+              v-if="student.trainedBefore"
+              variant="default"
+              class="bg-green-500/10 text-green-700 dark:bg-green-500/20 dark:text-green-300 hover:bg-green-500/20"
+            >
+              Experiencia previa
+            </Badge>
+            <Badge
+              v-if="student.medicalConditions"
+              variant="default"
+              class="bg-yellow-500/10 text-yellow-700 dark:bg-yellow-500/20 dark:text-yellow-300 hover:bg-yellow-500/20"
+            >
+              Condiciones médicas
             </Badge>
           </div>
         </div>
@@ -54,7 +82,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
 import {
   Card,
   CardHeader,
@@ -62,7 +89,7 @@ import {
   CardDescription,
 } from '@/components/ui/card'
 import type { IStudent } from '../../interfaces/IStudent'
-import { Mail, Plus } from 'lucide-vue-next'
+import { Mail, UserPlus, Scale, Ruler } from 'lucide-vue-next'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 

@@ -8,6 +8,8 @@ export class CategoryAdapter {
       name: apiCategory.name,
       description: apiCategory.description,
       type: apiCategory.type,
+      color: apiCategory.color,
+      normalizedName: apiCategory.normalized_name,
       createdAt: apiCategory.created_at,
       updatedAt: apiCategory.updated_at,
     }
