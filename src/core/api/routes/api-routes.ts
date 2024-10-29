@@ -34,4 +34,15 @@ export const API_ROUTES = {
     UPDATE: (id: number) => `/categories/${id}`,
     REMOVE: (id: number) => `/categories/${id}`,
   },
+  EXERCISES: {
+    GET_ALL: '/exercises',
+    CREATE: '/exercises',
+    GET_BY_ID: (id: number) => `/exercises/${id}`,
+    UPDATE: (id: number) => `/exercises/${id}`,
+    REMOVE: (id: number) => `/exercises/${id}`,
+    SET_MAIN_IMAGE: (exerciseId: number, imageId: number) =>
+      `/exercises/${exerciseId}/images/${imageId}/main`,
+    REMOVE_IMAGE: (exerciseId: number, imageId: number) =>
+      `/exercises/${exerciseId}/images/${imageId}`,
+  },
 }
