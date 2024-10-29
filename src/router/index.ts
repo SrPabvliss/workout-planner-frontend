@@ -62,11 +62,59 @@ const router = createRouter({
             ),
         },
         {
+          path: 'categorias-alimentacion',
+          name: 'categorias-alimentacion',
+          component: () =>
+            import(
+              '@/features/categories/presentation/views/categories-meal-view.vue'
+            ),
+        },
+        {
+          path: 'categorias-alimentacion/nueva',
+          name: 'newMealCategory',
+          component: () =>
+            import(
+              '@/features/categories/presentation/views/new-meal-category.vue'
+            ),
+        },
+        {
+          path: 'categorias-alimentacion/editar/:id',
+          name: 'editMealCategory',
+          component: () =>
+            import(
+              '@/features/categories/presentation/views/edit-category.vue'
+            ),
+        },
+        {
           path: 'ejercicios',
           name: 'ejercicios',
           component: () =>
             import(
               '@/features/dashboard/presentation/views/dashboard-view.vue'
+            ),
+        },
+        {
+          path: 'categorias-ejercicios',
+          name: 'categorias-ejercicios',
+          component: () =>
+            import(
+              '@/features/categories/presentation/views/categories-exercise-view.vue'
+            ),
+        },
+        {
+          path: 'categorias-ejercicios/nueva',
+          name: 'newExerciseCategory',
+          component: () =>
+            import(
+              '@/features/categories/presentation/views/new-exercise-category.vue'
+            ),
+        },
+        {
+          path: 'categorias-ejercicios/editar/:id',
+          name: 'editExerciseCategory',
+          component: () =>
+            import(
+              '@/features/categories/presentation/views/edit-category.vue'
             ),
         },
         {

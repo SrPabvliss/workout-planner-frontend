@@ -1,23 +1,28 @@
 <template>
   <div class="w-full">
-    <Input
-      v-model="localQuery"
-      @input="onInput"
-      placeholder="Busca estudiantes..."
-    />
+    <Input v-model="localQuery" @input="onInput" :placeholder="placeholder" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { Input } from '@/components/ui/input'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const props = defineProps({
   modelValue: {
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    required: true,
+  },
 })
+
+const placeholder = computed(
+  () =>
+    `Buscar categorías de ${props.type === 'MEAL' ? 'alimentación' : 'ejercicios'}...`,
+)
 
 const emit = defineEmits(['update:modelValue', 'search'])
 

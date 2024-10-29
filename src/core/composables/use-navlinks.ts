@@ -11,18 +11,48 @@ export default function useNavLinks(roleType: string) {
         href: 'estudiantes',
       },
       {
-        title: 'Comidas',
+        title: 'Alimentación',
         label: '',
         icon: 'lucide:apple',
         variant: 'ghost',
-        href: 'comidas',
+        children: [
+          {
+            title: 'Comidas',
+            label: '',
+            icon: 'lucide:utensils',
+            variant: 'ghost',
+            href: 'comidas',
+          },
+          {
+            title: 'Categorías',
+            label: '',
+            icon: 'lucide:list',
+            variant: 'ghost',
+            href: 'categorias-alimentacion',
+          },
+        ],
       },
       {
-        title: 'Ejercicios',
+        title: 'Actividad Física',
         label: '',
-        icon: 'lucide:clipboard-list',
+        icon: 'lucide:dumbbell',
         variant: 'ghost',
-        href: 'ejercicios',
+        children: [
+          {
+            title: 'Ejercicios',
+            label: '',
+            icon: 'lucide:clipboard-list',
+            variant: 'ghost',
+            href: 'ejercicios',
+          },
+          {
+            title: 'Categorías',
+            label: '',
+            icon: 'lucide:list',
+            variant: 'ghost',
+            href: 'categorias-ejercicios',
+          },
+        ],
       },
       {
         title: 'Rutinas',
@@ -40,19 +70,7 @@ export default function useNavLinks(roleType: string) {
       },
     ],
     student: [
-      {
-        title: 'Projects',
-        label: '',
-        icon: 'lucide:layout-dashboard',
-        variant: 'ghost',
-        href: 'projects',
-      },
-      {
-        title: 'Reports',
-        label: '',
-        icon: 'lucide:file-text',
-        variant: 'ghost',
-      },
+      /*...*/
     ] as const,
   }
 

@@ -1,4 +1,4 @@
-// use-student-form.ts
+
 import { z } from 'zod'
 import { ref } from 'vue'
 import { StudentDataSourceImpl } from '../services/datasource'
@@ -29,9 +29,7 @@ export const studentSchema = z.object({
     }),
   height: z.number({ required_error: 'La altura es requerida.' }),
   weight: z.number({ required_error: 'El peso es requerido.' }),
-  medicalConditions: z.string({
-    required_error: 'Las condiciones médicas son requeridas.',
-  }),
+  medicalConditions: z.string().optional(),
   trainedBefore: z
     .boolean({
       required_error: 'Tiene entrenamientos anteriores.',
@@ -72,7 +70,6 @@ export function useStudentForm(currentStudent?: IStudent | null) {
         formData as IUpdateStudent,
       )
 
-
       hasChanges.value = Object.keys(changedFields).length > 0
 
       if (!hasChanges.value) {
@@ -91,8 +88,6 @@ export function useStudentForm(currentStudent?: IStudent | null) {
         trainer: user!.id,
       } as ICreateStudent)
     }
-
-   
 
     if (response) {
       setTimeout(() => {
