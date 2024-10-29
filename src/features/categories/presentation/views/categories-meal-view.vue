@@ -7,7 +7,7 @@ import ContentLayout from '@/core/layout/content-layout.vue'
 import CategoryBreadcrumb from '../components/categories-breadcrumb.vue'
 import { CategoryType } from '../../interfaces/ICategory'
 
-const { categories, addCategory } = useCategories(CategoryType.MEAL)
+const { categories } = useCategories(CategoryType.MEAL)
 const searchQuery = ref('')
 
 const breadcrumbItems = ref([
@@ -41,7 +41,6 @@ const onSearch = (query: string) => {
         />
         <CategoryGrid
           :categories="filteredCategories"
-          @addCategory="addCategory"
           :type="CategoryType.MEAL"
         />
       </div>

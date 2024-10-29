@@ -1,12 +1,32 @@
+<script setup lang="ts">
+import { Card, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import type { ICategory } from '../../interfaces/ICategory'
+import { Plus, Clock, Pencil } from 'lucide-vue-next'
+import { Badge } from '@/components/ui/badge'
+import { Icon } from '@iconify/vue'
+import { useCategoryCard } from '../../composable/use-category-card'
+
+const props = defineProps({
+  category: {
+    type: Object as () => ICategory,
+    default: null,
+  },
+  isAddCard: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const emit = defineEmits(['add'])
+
+const { handleClick, cardClasses, formatters, styles } = useCategoryCard(props)
+</script>
+
 <template>
   <Card
-    @click="handleClick"
-    class="cursor-pointer transition-all duration-200 hover:shadow-lg overflow-hidden relative h-[140px]"
-    :class="{
-      'hover:bg-gray-50 dark:hover:bg-slate-800': isAddCard,
-      'hover:scale-[1.02]': !isAddCard,
-      'border-dashed': isAddCard,
-    }"
+    @click="() => handleClick(emit)"
+    :class="[cardClasses.base, cardClasses.conditional]"
   >
     <CardHeader
       v-if="isAddCard"
@@ -23,18 +43,18 @@
     <div v-else class="h-full">
       <div
         class="absolute inset-0 opacity-10 bg-gradient-to-br"
-        :class="getGradientClass(category)"
+        :class="styles.getGradientClass()"
       ></div>
 
       <CardHeader class="h-full p-4 flex flex-col justify-between">
         <div class="flex items-center space-x-3">
           <div
             class="p-2 rounded-lg"
-            :style="category.color ? { backgroundColor: category.color } : {}"
-            :class="getIconBgClass(category)"
+            :style="category?.color ? { backgroundColor: category.color } : {}"
+            :class="styles.getIconBgClass()"
           >
             <Icon
-              :icon="getIconByType(category.type)"
+              :icon="formatters.getIconByType(category.type)"
               class="h-5 w-5 text-white"
             />
           </div>
@@ -49,14 +69,14 @@
           <Badge
             variant="secondary"
             class="text-xs"
-            :class="getBadgeClass(category)"
+            :class="styles.getBadgeClass()"
           >
-            {{ getCategoryTypeLabel(category.type) }}
+            {{ formatters.getCategoryTypeLabel(category.type) }}
           </Badge>
 
           <div class="flex items-center text-xs text-muted-foreground">
             <Clock class="h-3 w-3 mr-1" />
-            {{ formatDate(category.createdAt) }}
+            {{ formatters.formatDate(category.createdAt) }}
           </div>
         </div>
       </CardHeader>
@@ -71,72 +91,3 @@
     </div>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { Card, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import type { ICategory } from '../../interfaces/ICategory'
-import { Plus, Clock, Pencil } from 'lucide-vue-next'
-import { Badge } from '@/components/ui/badge'
-import { Icon } from '@iconify/vue'
-import { format } from 'date-fns'
-import { es } from 'date-fns/locale'
-
-const props = defineProps({
-  category: {
-    type: Object as () => ICategory,
-    default: null,
-  },
-  isAddCard: {
-    type: Boolean,
-    default: false,
-  },
-})
-
-const emit = defineEmits(['add'])
-
-const handleClick = () => {
-  if (props.isAddCard) {
-    emit('add')
-  }
-}
-
-const getIconByType = (type: string) => {
-  return type === 'MEAL' ? 'mdi:food-apple' : 'mdi:dumbbell'
-}
-
-const getCategoryTypeLabel = (type: string) => {
-  return type === 'MEAL' ? 'Alimentación' : 'Ejercicio'
-}
-
-const formatDate = (date: string) => {
-  return format(new Date(date), "d 'de' MMMM, yyyy", { locale: es })
-}
-
-const getGradientClass = (category: ICategory) => {
-  if (category.color) {
-    return `from-[${category.color}]/80 to-[${category.color}]`
-  }
-  return category.type === 'MEAL'
-    ? 'from-green-500 to-emerald-700'
-    : 'from-blue-500 to-indigo-700'
-}
-
-const getIconBgClass = (category: ICategory) => {
-  if (category.color) {
-    return `bg-[${category.color}]`
-  }
-  return category.type === 'MEAL'
-    ? 'bg-green-500 dark:bg-green-600'
-    : 'bg-blue-500 dark:bg-blue-600'
-}
-
-const getBadgeClass = (category: ICategory) => {
-  if (category.color) {
-    return `bg-[${category.color}]/10 text-[${category.color}] dark:bg-[${category.color}]/20 dark:text-[${category.color}]/90`
-  }
-  return category.type === 'MEAL'
-    ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100'
-    : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100'
-}
-</script>

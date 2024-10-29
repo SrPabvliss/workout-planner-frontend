@@ -10,16 +10,11 @@ export function useCategories(type: CategoryType) {
       await CategoryDataSourceImpl.getInstance().getByType(type)
   }
 
-  const addCategory = async () => {
-    console.log('add category')
-  }
-
   onMounted(() => {
     loadCategories()
   })
 
   return {
     categories,
-    addCategory,
   }
 }
