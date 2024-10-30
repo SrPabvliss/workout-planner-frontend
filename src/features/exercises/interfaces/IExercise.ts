@@ -4,9 +4,8 @@ import type {
 } from '@/features/categories/interfaces/ICategory'
 import type {
   IApiExerciseImage,
-  ICreateExerciseImage,
   IExerciseImage,
-  IUpdateExerciseImage,
+  IExerciseImageUpload,
 } from './IExerciseImage'
 
 export interface IApiExercise {
@@ -35,21 +34,14 @@ export interface IExercise {
   categories: ICategory[]
 }
 
-export interface ICreateExercise
-  extends Omit<
-    IExercise,
-    | 'id'
-    | 'createdAt'
-    | 'updatedAt'
-    | 'images'
-    | 'categories'
-    | 'normalized_name'
-  > {
+export interface ICreateExerciseData {
+  name: string
+  description: string
+  youtubeUrl?: string | null
   categories: number[]
-  images: ICreateExerciseImage[]
+  images?: IExerciseImageUpload[]
 }
 
-export interface IUpdateExercise
-  extends Partial<Omit<ICreateExercise, 'images'>> {
-  images?: IUpdateExerciseImage[]
+export interface IUpdateExerciseData extends Partial<ICreateExerciseData> {
+  removedImages?: number[]
 }

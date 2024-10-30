@@ -1,9 +1,6 @@
-import { toSnakeCase } from '@/lib/case-converter'
 import type {
   IApiExerciseImage,
-  ICreateExerciseImage,
   IExerciseImage,
-  IUpdateExerciseImage,
 } from '../interfaces/IExerciseImage'
 
 export class ExerciseImageAdapter {
@@ -23,14 +20,5 @@ export class ExerciseImageAdapter {
     return apiImages.map(image =>
       ExerciseImageAdapter.mapToExerciseImage(image),
     )
-  }
-
-  static mapToApiExerciseImage(
-    image:
-      | Partial<IExerciseImage>
-      | ICreateExerciseImage
-      | IUpdateExerciseImage,
-  ): Partial<IApiExerciseImage> {
-    return toSnakeCase(image) as Partial<IApiExerciseImage>
   }
 }

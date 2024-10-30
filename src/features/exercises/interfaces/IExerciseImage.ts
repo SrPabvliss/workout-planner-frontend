@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
-
 export interface IApiExerciseImage {
   id: number
   url: string
@@ -16,10 +14,9 @@ export interface IExerciseImage {
   createdAt: string
 }
 
-export interface ICreateExerciseImage extends Omit<IExerciseImage, 'id' | 'createdAt'> {}
-
-export interface IUpdateExerciseImage extends ICreateExerciseImage {
-  id?: number
+export interface IExerciseImageUpload {
+  file: File
+  isMain: boolean
 }
 
 export interface ISetMainImage {

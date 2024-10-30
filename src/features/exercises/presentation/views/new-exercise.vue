@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import ContentLayout from '@/core/layout/content-layout.vue'
 import NewEditForm from '../components/new-edit-form.vue'
-import StudentBreadcrumb from '../components/student-breadcrumb.vue'
+import ExerciseBreadcrumb from '../components/exercise-breadcrumb.vue'
 import { ref } from 'vue'
 
 const breadcrumbItems = ref([
-  { label: 'Todos los estudiantes', href: 'estudiantes' },
-  { label: 'Nuevo', href: 'newStudent', current: true },
+  { label: 'Todos los ejercicios', href: 'ejercicios' },
+  { label: 'Nuevo', href: 'nuevo-ejercicio', current: true },
 ])
 </script>
 
 <template>
-  <ContentLayout :title="'Agregar nuevo estudiante'">
+  <ContentLayout :title="'Agregar nuevo ejercicio'">
     <template #content>
-      <StudentBreadcrumb :breadcrumbItems="breadcrumbItems" />
+      <ExerciseBreadcrumb :breadcrumbItems="breadcrumbItems" />
       <NewEditForm />
     </template>
   </ContentLayout>

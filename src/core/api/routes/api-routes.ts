@@ -44,5 +44,6 @@ export const API_ROUTES = {
       `/exercises/${exerciseId}/images/${imageId}/main`,
     REMOVE_IMAGE: (exerciseId: number, imageId: number) =>
       `/exercises/${exerciseId}/images/${imageId}`,
+    UPLOAD_IMAGES: (exerciseId: number) => `/exercises/${exerciseId}/images`,
   },
 }

@@ -1,15 +1,19 @@
 import type { IHttpHandler } from '@/core/interfaces/IHttpHandler'
-
 import { AxiosClient } from '@/core/infrastructure/http/axios-client'
 import { API_ROUTES } from '@/core/api/routes/api-routes'
-import type { IApiExercise, ICreateExercise, IExercise, IUpdateExercise } from '../interfaces/IExercise'
+import type {
+  IApiExercise,
+  ICreateExerciseData,
+  IExercise,
+  IUpdateExerciseData,
+} from '../interfaces/IExercise'
 import { ExerciseAdapter } from '../adapters/exercise-adapter'
 
 interface ExerciseDataSource {
   getAll(): Promise<IExercise[]>
   getById(id: number): Promise<IExercise>
-  create(exercise: ICreateExercise): Promise<IExercise>
-  update(id: number, exercise: IUpdateExercise): Promise<IExercise>
+  create(exercise: ICreateExerciseData): Promise<IExercise>
+  update(id: number, exercise: IUpdateExerciseData): Promise<IExercise>
   remove(id: number): Promise<IExercise>
 }
 
@@ -42,18 +46,32 @@ export class ExerciseDataSourceImpl implements ExerciseDataSource {
     return ExerciseAdapter.mapToExercise(data)
   }
 
-  async create(exercise: ICreateExercise) {
+  async create(exerciseData: ICreateExerciseData) {
+    const formData = ExerciseAdapter.createFormData(exerciseData)
+
     const { data } = await this.httpClient.post<IApiExercise>(
       API_ROUTES.EXERCISES.CREATE,
-      ExerciseAdapter.mapToApiExercise(exercise),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
     )
     return ExerciseAdapter.mapToExercise(data)
   }
 
-  async update(id: number, exercise: IUpdateExercise) {
+  async update(id: number, exerciseData: IUpdateExerciseData) {
+    const formData = ExerciseAdapter.updateFormData(exerciseData)
+
     const { data } = await this.httpClient.patch<IApiExercise>(
       API_ROUTES.EXERCISES.UPDATE(id),
-      ExerciseAdapter.mapToApiExercise(exercise),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
     )
     return ExerciseAdapter.mapToExercise(data)
   }

@@ -86,14 +86,6 @@ const router = createRouter({
             ),
         },
         {
-          path: 'ejercicios',
-          name: 'ejercicios',
-          component: () =>
-            import(
-              '@/features/dashboard/presentation/views/dashboard-view.vue'
-            ),
-        },
-        {
           path: 'categorias-ejercicios',
           name: 'categorias-ejercicios',
           component: () =>
@@ -130,6 +122,26 @@ const router = createRouter({
           name: 'perfil',
           component: () =>
             import('@/features/users/presentation/views/users-view.vue'),
+        },
+        {
+          path: 'ejercicios',
+          name: 'ejercicios',
+          component: () =>
+            import(
+              '@/features/exercises/presentation/views/exercises-view.vue'
+            ),
+        },
+        {
+          path: 'ejercicios/nuevo',
+          name: 'nuevo-ejercicio',
+          component: () =>
+            import('@/features/exercises/presentation/views/new-exercise.vue'),
+        },
+        {
+          path: 'ejercicios/editar/:id',
+          name: 'editar-ejercicio',
+          component: () =>
+            import('@/features/exercises/presentation/views/edit-exercise.vue'),
         },
       ],
     },

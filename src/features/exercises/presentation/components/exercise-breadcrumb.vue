@@ -18,10 +18,8 @@ defineProps<{
   }[]
 }>()
 
-const handleNavigaion = (href: string, current?: boolean) => {
+const handleNavigation = (href: string, current?: boolean) => {
   if (current) return
-
-  console.log(href)
 
   router.push({
     name: href,
@@ -34,12 +32,15 @@ const handleNavigaion = (href: string, current?: boolean) => {
   <Breadcrumb>
     <BreadcrumbList>
       <BreadcrumbItem v-for="item in breadcrumbItems" :key="item.href">
-        <BreadcrumbLink @click="handleNavigaion(item.href, item.current)">
+        <BreadcrumbLink
+          :class="{ 'cursor-default': item.current }"
+          @click="handleNavigation(item.href, item.current)"
+        >
           {{ item.label }}
         </BreadcrumbLink>
-        <ChevronRight class="h-4 w-4 my-0 py-0" />
+        <ChevronRight v-if="!item.current" class="h-4 w-4 my-0 py-0" />
       </BreadcrumbItem>
-      <BreadcrumbSeparator aria-hidden="true">
+      <BreadcrumbSeparator v-if="breadcrumbItems.length > 1" aria-hidden="true">
         <BreadcrumbEllipsis />
       </BreadcrumbSeparator>
     </BreadcrumbList>
