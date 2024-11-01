@@ -9,8 +9,8 @@ import type {
 import { ExerciseImageAdapter } from '../adapters/exercise-image-adapter'
 
 interface ExerciseImageDataSource {
-  setMainImage(exerciseId: number, imageId: number): Promise<IExerciseImage>
-  removeImage(exerciseId: number, imageId: number): Promise<IExerciseImage>
+  setMainImage(exerciseId: number, imageId: number): Promise<boolean>
+  removeImage(exerciseId: number, imageId: number): Promise<boolean>
   uploadImages(
     exerciseId: number,
     images: IExerciseImageUpload[],
@@ -33,17 +33,17 @@ export class ExerciseImageDataSourceImpl implements ExerciseImageDataSource {
   }
 
   async setMainImage(exerciseId: number, imageId: number) {
-    const { data } = await this.httpClient.patch<IApiExerciseImage>(
+    const { data } = await this.httpClient.patch<boolean>(
       API_ROUTES.EXERCISES.SET_MAIN_IMAGE(exerciseId, imageId),
     )
-    return ExerciseImageAdapter.mapToExerciseImage(data)
+    return data
   }
 
   async removeImage(exerciseId: number, imageId: number) {
-    const { data } = await this.httpClient.delete<IApiExerciseImage>(
+    const { data } = await this.httpClient.delete<boolean>(
       API_ROUTES.EXERCISES.REMOVE_IMAGE(exerciseId, imageId),
     )
-    return ExerciseImageAdapter.mapToExerciseImage(data)
+    return data
   }
 
   async uploadImages(exerciseId: number, images: IExerciseImageUpload[]) {

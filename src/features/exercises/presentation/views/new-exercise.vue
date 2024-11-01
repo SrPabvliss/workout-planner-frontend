@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ContentLayout from '@/core/layout/content-layout.vue'
-import NewEditForm from '../components/new-edit-form.vue'
+import NewEditForm from '../components/form/new-edit-form.vue'
 import ExerciseBreadcrumb from '../components/exercise-breadcrumb.vue'
 import { ref } from 'vue'
 
