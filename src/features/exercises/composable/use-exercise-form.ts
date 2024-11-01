@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ref } from 'vue'
 import type { ICreateExerciseData, IExercise } from '../interfaces/IExercise'
+import { useExerciseImages } from './use-exercise-images'
 import { getChangedFields } from '@/lib/object-utils'
 import { ExerciseDataSourceImpl } from '../services/exercise-datasource'
-import { useExerciseImages } from './use-exercise-images'
-import {
-  exerciseSchema,
-  categoriesSchema,
-  type ExerciseFormData,
-} from '../constants'
 import router from '@/router'
 import { z } from 'zod'
+import {
+  categoriesSchema,
+  exerciseSchema,
+  type ExerciseFormData,
+} from '../constants'
 
 export function useExerciseForm(currentExercise?: IExercise | null) {
   const mode = ref<'new' | 'edit'>(currentExercise ? 'edit' : 'new')
@@ -18,14 +18,14 @@ export function useExerciseForm(currentExercise?: IExercise | null) {
   const exerciseDataSource = ExerciseDataSourceImpl.getInstance()
 
   const {
-    imageFiles,
     imagesPreviews,
-    removedImageIds,
-    handleImageUpload,
     removeImage,
-    toggleMainImage,
+    setMainImage,
+    handleNewImages,
+    uploadPendingImages,
     isMainImage,
-    uploadImages,
+    canManageImage,
+    hasPendingImages,
   } = useExerciseImages(currentExercise)
 
   const defaultValues = currentExercise
@@ -61,25 +61,20 @@ export function useExerciseForm(currentExercise?: IExercise | null) {
           data as Record<string, any>,
         )
 
-        if (
-          Object.keys(changedFields).length === 0 &&
-          imageFiles.value.length === 0 &&
-          removedImageIds.value.length === 0
-        ) {
-          return
-        }
+        if (Object.keys(changedFields).length > 0 || hasPendingImages.value) {
+          if (Object.keys(changedFields).length > 0) {
+            response = await exerciseDataSource.update(
+              currentExercise.id,
+              changedFields,
+            )
+          }
 
-        if (Object.keys(changedFields).length > 0) {
-          response = await exerciseDataSource.update(
-            currentExercise.id,
-            changedFields,
-          )
-        }
-
-        if (imageFiles.value.length > 0) {
-          await uploadImages(currentExercise.id)
+          if (hasPendingImages.value) {
+            await uploadPendingImages(currentExercise.id)
+          }
         }
       } else {
+        // Crear nuevo ejercicio
         const exerciseData: ICreateExerciseData = {
           name: data.name,
           description: data.description,
@@ -89,8 +84,8 @@ export function useExerciseForm(currentExercise?: IExercise | null) {
 
         response = await exerciseDataSource.create(exerciseData)
 
-        if (response && imageFiles.value.length > 0) {
-          await uploadImages(response.id)
+        if (response && hasPendingImages.value) {
+          await uploadPendingImages(response.id)
         }
       }
 
@@ -99,6 +94,8 @@ export function useExerciseForm(currentExercise?: IExercise | null) {
           router.back()
         }, 800)
       }
+
+      return response
     } catch (error) {
       console.error('Error in form submission:', error)
       throw error
@@ -108,17 +105,19 @@ export function useExerciseForm(currentExercise?: IExercise | null) {
   }
 
   return {
+    mode,
     schema: exerciseSchema,
     onSubmit,
     defaultValues,
-    mode,
     isSubmitting,
-    imageFiles,
-    imagesPreviews,
-    handleImageUpload,
-    removeImage,
-    toggleMainImage,
-    isMainImage,
     validateCategories,
+
+    imagesPreviews,
+    handleImageUpload: handleNewImages,
+    handleImageRemove: removeImage,
+    handleSetMainImage: setMainImage,
+    isMainImage,
+    canManageImage,
+    hasPendingImages,
   }
 }

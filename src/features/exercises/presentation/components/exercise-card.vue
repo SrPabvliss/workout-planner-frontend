@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Card, CardContent } from '@/components/ui/card'
-import { Youtube, PlusCircle, VideoOff } from 'lucide-vue-next'
+import { Youtube, PlusCircle, VideoOff, Dumbbell } from 'lucide-vue-next'
 import type { IExercise } from '../../interfaces/IExercise'
 import { Badge } from '@/components/ui/badge'
 import { useRouter } from 'vue-router'
@@ -20,10 +20,7 @@ const mainImage = computed(() => {
   )
 })
 
-const imageUrl = computed(() => {
-  if (props.isAddCard) return undefined
-  return mainImage.value?.url || '/images/exercise-placeholder.jpg'
-})
+const hasImage = computed(() => !!mainImage.value?.url)
 
 const categories = computed(() => {
   if (!props.exercise?.categories.length) return []
@@ -66,11 +63,23 @@ const handleClick = () => {
             class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10 transition-transform duration-300 group-hover:scale-105"
           ></div>
 
-          <img
-            :src="imageUrl"
-            :alt="exercise?.name"
-            class="aspect-video object-cover w-full transition-transform duration-300 group-hover:scale-105"
-          />
+          <!-- Imagen o Placeholder -->
+          <template v-if="hasImage">
+            <img
+              :src="mainImage?.url"
+              :alt="exercise?.name"
+              class="aspect-video object-cover w-full transition-transform duration-300 group-hover:scale-105"
+            />
+          </template>
+          <div
+            v-else
+            class="aspect-video w-full bg-muted flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
+          >
+            <div class="text-center text-muted-foreground">
+              <Dumbbell class="w-12 h-12 mx-auto mb-2 opacity-50" />
+              <span class="text-sm">Sin imagen</span>
+            </div>
+          </div>
 
           <div class="absolute top-2 right-2 flex gap-2 z-20">
             <div

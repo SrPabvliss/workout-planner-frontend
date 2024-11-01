@@ -12,8 +12,8 @@ import {
 } from '@/features/exercises/constants'
 import type { IExercise } from '@/features/exercises/interfaces/IExercise'
 import { computed, onMounted } from 'vue'
-import ExerciseImageSection from './exercise-image-section.vue'
 import ExerciseCategorySection from './exercise-category-section.vue'
+import ExerciseImageSection from './exercise-image-section.vue'
 
 const props = defineProps<{
   exercise?: IExercise | null
@@ -26,10 +26,12 @@ const {
   isSubmitting,
   imagesPreviews,
   handleImageUpload,
-  removeImage,
-  toggleMainImage,
+  handleImageRemove,
+  handleSetMainImage,
   isMainImage,
+  canManageImage,
   validateCategories,
+  hasPendingImages,
 } = useExerciseForm(props.exercise)
 
 const {
@@ -77,7 +79,7 @@ const handleSubmit = async (formData: any) => {
         <AutoForm
           class="space-y-6"
           :schema="formSchema"
-          :config="fieldConfig"
+          :field-config="fieldConfig"
           :initial-values="defaultValues"
           @submit="handleSubmit"
         >
@@ -92,9 +94,11 @@ const handleSubmit = async (formData: any) => {
             <ExerciseImageSection
               :images-previews="imagesPreviews"
               :is-main-image="isMainImage"
-              :on-remove="removeImage"
-              :on-toggle-main="toggleMainImage"
+              :can-manage-image="canManageImage"
+              :on-remove="handleImageRemove"
+              :on-toggle-main="handleSetMainImage"
               :on-upload="handleImageUpload"
+              :disabled="isSubmitting"
             />
           </div>
 
@@ -105,6 +109,9 @@ const handleSubmit = async (formData: any) => {
               :disabled="isSubmitting"
             >
               {{ formTitle }}
+              <span v-if="hasPendingImages" class="ml-2 text-sm">
+                (Hay imágenes pendientes por guardar)
+              </span>
             </Button>
           </div>
         </AutoForm>

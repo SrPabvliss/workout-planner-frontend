@@ -2,13 +2,16 @@
 import { Label } from '@/components/ui/label'
 import ImagePreview from './image-preview.vue'
 import { IMAGES_CONFIG } from '@/features/exercises/constants'
+import type { ImagePreviewInfo } from '@/features/exercises/interfaces/IExerciseImage';
 
 defineProps<{
-  imagesPreviews: string[]
+  imagesPreviews: ImagePreviewInfo[]
   isMainImage: (index: number) => boolean
-  onRemove: (index: number) => void
-  onToggleMain: (index: number) => void
+  canManageImage: (index: number) => boolean
+  onRemove: (index: number) => Promise<void>
+  onToggleMain: (index: number) => Promise<void>
   onUpload: (event: Event) => void
+  disabled?: boolean
 }>()
 </script>
 
@@ -22,13 +25,23 @@ defineProps<{
         class="relative"
       >
         <ImagePreview
-          :src="preview"
+          :src="preview.url"
           :is-main="isMainImage(index)"
+          :disabled="disabled"
+          :is-pending="preview.isPending"
+          :show-actions="canManageImage(index)"
           @remove="onRemove(index)"
           @toggle-main="onToggleMain(index)"
-        />
+        >
+          <template v-if="preview.isPending" #status>
+            <span class="text-xs text-muted-foreground">
+              Pendiente de guardar
+            </span>
+          </template>
+        </ImagePreview>
       </div>
       <div
+        v-if="!disabled"
         class="border-2 border-dashed border-gray-300 rounded-lg p-4 flex items-center justify-center cursor-pointer hover:border-primary"
         @click="$refs.fileInput.click()"
       >

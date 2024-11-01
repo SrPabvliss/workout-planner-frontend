@@ -29,20 +29,18 @@ export const EXERCISE_FORM_SCHEMA = z.object({
 })
 
 export const EXERCISE_FIELD_CONFIG = {
-  fields: {
-    name: {
-      label: 'Nombre',
-      description: undefined,
-    },
-    description: {
-      label: 'Descripción',
-      componentType: 'textarea',
-      description: 'Describe el ejercicio detalladamente',
-    },
-    youtubeUrl: {
-      label: 'URL de YouTube',
-      description: 'URL del video demostrativo (opcional)',
-    },
+  name: {
+    label: 'Nombre',
+    description: undefined,
+  },
+  description: {
+    label: 'Descripción',
+    componentType: 'textarea',
+    description: 'Describe el ejercicio detalladamente',
+  },
+  youtubeUrl: {
+    label: 'URL de YouTube',
+    description: 'URL del video demostrativo (opcional)',
   },
 }
 

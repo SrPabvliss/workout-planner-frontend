@@ -23,3 +23,11 @@ export interface ISetMainImage {
   exerciseId: number
   imageId: number
 }
+
+export interface ImagePreviewInfo {
+  url: string
+  isPending: boolean
+  isMain?: boolean
+  id?: number
+}
+
