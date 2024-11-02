@@ -46,4 +46,16 @@ export const API_ROUTES = {
       `/exercises/${exerciseId}/images/${imageId}`,
     UPLOAD_IMAGES: (exerciseId: number) => `/exercises/${exerciseId}/images`,
   },
+  INGREDIENTS: {
+    GET_ALL: '/ingredients',
+    GET_ACTIVE: '/ingredients/active',
+    CREATE: '/ingredients',
+    GET_BY_ID: (id: number) => `/ingredients/${id}`,
+    UPDATE: (id: number) => `/ingredients/${id}`,
+    REMOVE: (id: number) => `/ingredients/${id}`,
+  },
+  NUTRITIONAL_INFO: {
+    GET_BY_INGREDIENT_ID: (id: number) => `/ingredients/${id}/nutritional-info`,
+    UPDATE: (id: number) => `/ingredients/${id}/nutritional-info`,
+  },
 }

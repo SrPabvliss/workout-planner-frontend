@@ -14,7 +14,6 @@ export default function useDependencies(
   fieldName: string,
 ) {
   const form = useFormValues()
-  // parsed test[0].age => test.age
   const currentFieldName = fieldName.replace(/\[\d+\]/g, '')
   const currentFieldValue = useFieldValue<any>(fieldName)
 

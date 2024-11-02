@@ -74,7 +74,6 @@ export function useExerciseForm(currentExercise?: IExercise | null) {
           }
         }
       } else {
-        // Crear nuevo ejercicio
         const exerciseData: ICreateExerciseData = {
           name: data.name,
           description: data.description,
