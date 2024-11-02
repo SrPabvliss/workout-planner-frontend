@@ -57,9 +57,19 @@ const router = createRouter({
           path: 'comidas',
           name: 'comidas',
           component: () =>
-            import(
-              '@/features/dashboard/presentation/views/dashboard-view.vue'
-            ),
+            import('@/features/meals/presentation/views/meals-view.vue'),
+        },
+        {
+          path: 'comidas/nueva',
+          name: 'nueva-comida',
+          component: () =>
+            import('@/features/meals/presentation/views/new-meal.vue'),
+        },
+        {
+          path: 'comidas/editar/:id',
+          name: 'editar-comida',
+          component: () =>
+            import('@/features/meals/presentation/views/edit-meal.vue'),
         },
         {
           path: 'categorias-alimentacion',

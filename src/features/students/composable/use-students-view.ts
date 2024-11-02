@@ -12,7 +12,6 @@ export function useStudents() {
     students.value = await StudentDataSourceImpl.getInstance().getAllByTrainer(
       user!.id,
     )
-    console.log(students.value)
   }
 
   const addStudent = async () => {

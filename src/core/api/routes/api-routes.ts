@@ -58,4 +58,23 @@ export const API_ROUTES = {
     GET_BY_INGREDIENT_ID: (id: number) => `/ingredients/${id}/nutritional-info`,
     UPDATE: (id: number) => `/ingredients/${id}/nutritional-info`,
   },
+  MEALS: {
+    GET_ALL: '/meals',
+    CREATE: '/meals',
+    GET_BY_ID: (id: number) => `/meals/${id}`,
+    UPDATE: (id: number) => `/meals/${id}`,
+    REMOVE: (id: number) => `/meals/${id}`,
+    ADD_INGREDIENTS: (id: number) => `/meals/${id}/ingredients`,
+    REMOVE_INGREDIENT: (mealId: number, ingredientId: number) =>
+      `/meals/${mealId}/ingredients/${ingredientId}`,
+    UPDATE_INGREDIENT: (mealId: number, ingredientId: number) =>
+      `/meals/${mealId}/ingredients/${ingredientId}`,
+  },
+  UNITS: {
+    GET_ALL: '/units',
+    CREATE: '/units',
+    GET_BY_ID: (id: number) => `/units/${id}`,
+    UPDATE: (id: number) => `/units/${id}`,
+    REMOVE: (id: number) => `/units/${id}`,
+  }
 }

@@ -59,7 +59,6 @@ export class IngredientDataSourceImpl implements IngredientDataSource {
       API_ROUTES.INGREDIENTS.CREATE,
       IngredientAdapter.mapToApiIngredient(ingredient),
     )
-    console.log('data', data)
     return IngredientAdapter.mapToIngredient(data)
   }
 

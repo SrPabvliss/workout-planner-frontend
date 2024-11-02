@@ -30,7 +30,6 @@ const addStudent = () => {
 }
 
 const editStudent = (id: number) => {
-  console.log(id)
   router.push({ name: `editStudent`, params: { id } })
 }
 </script>
