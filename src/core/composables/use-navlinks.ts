@@ -24,6 +24,13 @@ export default function useNavLinks(roleType: string) {
             href: 'comidas',
           },
           {
+            title: 'Ingredientes',
+            label: '',
+            icon: 'lucide:shopping-basket',
+            variant: 'ghost',
+            href: 'ingredientes',
+          },
+          {
             title: 'Categorías',
             label: '',
             icon: 'lucide:list',

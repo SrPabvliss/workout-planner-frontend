@@ -143,6 +143,30 @@ const router = createRouter({
           component: () =>
             import('@/features/exercises/presentation/views/edit-exercise.vue'),
         },
+        {
+          path: '/ingredientes',
+          name: 'ingredientes',
+          component: () =>
+            import(
+              '@/features/ingredients/presentation/views/ingredients-view.vue'
+            ),
+        },
+        {
+          path: '/ingredientes/nuevo',
+          name: 'nuevo-ingrediente',
+          component: () =>
+            import(
+              '@/features/ingredients/presentation/views/new-ingredient.vue'
+            ),
+        },
+        {
+          path: '/ingredientes/editar/:id',
+          name: 'editar-ingrediente',
+          component: () =>
+            import(
+              '@/features/ingredients/presentation/views/edit-ingredient.vue'
+            ),
+        },
       ],
     },
   ],
