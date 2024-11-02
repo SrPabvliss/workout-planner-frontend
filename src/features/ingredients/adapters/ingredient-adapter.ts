@@ -9,7 +9,6 @@ import { toSnakeCase } from '@/lib/case-converter'
 
 export class IngredientAdapter {
   static mapToIngredient(apiIngredient: IApiIngredient): IIngredient {
-    console.log('apiIngredient', apiIngredient)
     return {
       id: apiIngredient.id,
       name: apiIngredient.name,
@@ -24,7 +23,6 @@ export class IngredientAdapter {
   }
 
   static mapManyToIngredient(apiIngredients: IApiIngredient[]): IIngredient[] {
-    console.log('apiIngredients', apiIngredients)
     return apiIngredients.map(ingredient =>
       IngredientAdapter.mapToIngredient(ingredient),
     )

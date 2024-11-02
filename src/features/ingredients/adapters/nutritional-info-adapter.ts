@@ -8,7 +8,6 @@ export class NutritionalInfoAdapter {
   static mapToNutritionalInfo(
     apiNutritionalInfo: IApiNutritionalInfo,
   ): INutritionalInfo {
-    console.log('apiNutritionalInfo', apiNutritionalInfo)
     return {
       calories: apiNutritionalInfo.calories,
       protein: apiNutritionalInfo.protein,
