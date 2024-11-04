@@ -76,5 +76,20 @@ export const API_ROUTES = {
     GET_BY_ID: (id: number) => `/units/${id}`,
     UPDATE: (id: number) => `/units/${id}`,
     REMOVE: (id: number) => `/units/${id}`,
-  }
+  },
+  PRESET_EXERCISES: {
+    GET_ALL: '/preset-exercises',
+    CREATE: '/preset-exercises',
+    GET_BY_ID: (id: number) => `/preset-exercises/${id}`,
+    UPDATE: (id: number) => `/preset-exercises/${id}`,
+    REMOVE: (id: number) => `/preset-exercises/${id}`,
+  },
+
+  PRESET_MEALS: {
+    GET_ALL: '/preset-meals',
+    CREATE: '/preset-meals',
+    GET_BY_ID: (id: number) => `/preset-meals/${id}`,
+    UPDATE: (id: number) => `/preset-meals/${id}`,
+    REMOVE: (id: number) => `/preset-meals/${id}`,
+  },
 }

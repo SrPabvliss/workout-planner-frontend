@@ -37,6 +37,13 @@ export default function useNavLinks(roleType: string) {
             variant: 'ghost',
             href: 'categorias-alimentacion',
           },
+          {
+            title: 'Plantillas',
+            label: '',
+            icon: 'lucide:file-text',
+            variant: 'ghost',
+            href: 'plantillas-alimentacion',
+          },
         ],
       },
       {
@@ -59,14 +66,14 @@ export default function useNavLinks(roleType: string) {
             variant: 'ghost',
             href: 'categorias-ejercicios',
           },
+          {
+            title: 'Plantillas',
+            label: '',
+            icon: 'lucide:file-text',
+            variant: 'ghost',
+            href: 'plantillas-ejercicios',
+          },
         ],
-      },
-      {
-        title: 'Rutinas',
-        label: '',
-        icon: 'lucide:clock',
-        variant: 'ghost',
-        href: 'rutinas',
       },
       {
         title: 'Mi perfil',

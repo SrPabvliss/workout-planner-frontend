@@ -177,6 +177,51 @@ const router = createRouter({
               '@/features/ingredients/presentation/views/edit-ingredient.vue'
             ),
         },
+        {
+          path: 'plantillas-ejercicios',
+          name: 'plantillas-ejercicios',
+          component: () =>
+            import(
+              '@/features/presets/exercises/presentation/views/preset-exercises-view.vue'
+            ),
+        },
+        {
+          path: 'plantillas-ejercicios/nueva',
+          name: 'nueva-plantilla-ejercicio',
+          component: () =>
+            import(
+              '@/features/presets/exercises/presentation/views/new-preset-exercise.vue'
+            ),
+        },
+        {
+          path: 'plantillas-ejercicios/editar/:id',
+          name: 'editar-plantilla-ejercicio',
+          component: () =>
+            import(
+              '@/features/presets/exercises/presentation/views/edit-preset-exercise.vue'
+            ),
+        },
+
+        /*
+        {
+          path: 'plantillas-alimentacion',
+          name: 'plantillas-alimentacion',
+          component: () =>
+            import('@/features/presets/meals/presentation/views/preset-meals-view.vue'),
+        },
+        {
+          path: 'plantillas-alimentacion/nueva',
+          name: 'nueva-plantilla-alimentacion',
+          component: () =>
+            import('@/features/presets/meals/presentation/views/new-preset-meal.vue'),
+        },
+        {
+          path: 'plantillas-alimentacion/editar/:id',
+          name: 'editar-plantilla-alimentacion',
+          component: () =>
+            import('@/features/presets/meals/presentation/views/edit-preset-meal.vue'),
+        },
+        */
       ],
     },
   ],
