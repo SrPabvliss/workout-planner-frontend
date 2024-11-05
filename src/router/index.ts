@@ -202,26 +202,30 @@ const router = createRouter({
             ),
         },
 
-        /*
         {
           path: 'plantillas-alimentacion',
           name: 'plantillas-alimentacion',
           component: () =>
-            import('@/features/presets/meals/presentation/views/preset-meals-view.vue'),
+            import(
+              '@/features/presets/meals/presentation/views/preset-meals-view.vue'
+            ),
         },
         {
           path: 'plantillas-alimentacion/nueva',
           name: 'nueva-plantilla-alimentacion',
           component: () =>
-            import('@/features/presets/meals/presentation/views/new-preset-meal.vue'),
+            import(
+              '@/features/presets/meals/presentation/views/new-preset-meal.vue'
+            ),
         },
         {
           path: 'plantillas-alimentacion/editar/:id',
           name: 'editar-plantilla-alimentacion',
           component: () =>
-            import('@/features/presets/meals/presentation/views/edit-preset-meal.vue'),
+            import(
+              '@/features/presets/meals/presentation/views/edit-preset-meal.vue'
+            ),
         },
-        */
       ],
     },
   ],

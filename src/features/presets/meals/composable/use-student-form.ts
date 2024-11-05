@@ -1,108 +1,142 @@
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { z } from 'zod'
 import { ref } from 'vue'
-import { StudentDataSourceImpl } from '../services/datasource'
-import type {
-  ICreateStudent,
-  IStudent,
-  IUpdateStudent,
-} from '../interfaces/IStudent'
-import { getChangedFields } from '@/lib/object-utils'
+import { PresetMealDataSourceImpl } from '../services/datasource'
 import router from '@/router'
-import { useAuthStore } from '@/features/auth/context/auth-store'
 import { useToast } from 'vue-toastification'
+import type {
+  LocalPresetMealDay,
+  LocalPresetDayMeal,
+} from '../interfaces/ILocalPresetMeal'
+import type { IPresetMeal } from '../interfaces/IPresetMeals'
 
-export const studentSchema = z.object({
-  firstName: z
+export const presetMealSchema = z.object({
+  name: z
     .string({ required_error: 'El nombre es requerido.' })
     .min(2, { message: 'El nombre debe tener al menos 2 caracteres.' }),
-  lastName: z
-    .string({ required_error: 'El apellido es requerido.' })
-    .min(2, { message: 'El apellido debe tener al menos 2 caracteres.' }),
-  email: z
-    .string({ required_error: 'El correo es requerido.' })
-    .email({ message: 'El correo debe ser válido.' }),
-  username: z
-    .string({ required_error: 'El nombre de usuario es requerido.' })
-    .min(2, {
-      message: 'El nombre de usuario debe tener al menos 2 caracteres.',
-    }),
-  height: z.number({ required_error: 'La altura es requerida.' }),
-  weight: z.number({ required_error: 'El peso es requerido.' }),
-  medicalConditions: z.string().optional(),
-  trainedBefore: z
-    .boolean({
-      required_error: 'Tiene entrenamientos anteriores.',
-    })
-    .default(false),
+  description: z
+    .string({ required_error: 'La descripción es requerida.' })
+    .min(10, { message: 'La descripción debe tener al menos 10 caracteres.' }),
 })
 
-export function useStudentForm(currentStudent?: IStudent | null) {
-  const mode = ref(currentStudent ? 'edit' : 'new')
-  const { user, loadData } = useAuthStore()
-  const isSubmiting = ref(false)
+export function usePresetMealForm(currentPreset?: IPresetMeal | null) {
+  const mode = ref<'edit' | 'new'>(currentPreset ? 'edit' : 'new')
+  const isSubmitting = ref(false)
   const toast = useToast()
 
-  loadData()
-  const defaultValues = ref(
-    currentStudent
-      ? {
-          firstName: currentStudent.user.firstName,
-          lastName: currentStudent.user.lastName,
-          email: currentStudent.user.email,
-          username: currentStudent.user.username,
-          height: currentStudent.height,
-          weight: currentStudent.weight,
-          medicalConditions: currentStudent.medicalConditions,
-          trainedBefore: currentStudent.trainedBefore,
-        }
-      : null,
+  const createInitialDay = (dayOfWeek: number) => ({
+    dayOfWeek,
+    meals: [],
+  })
+
+  const days = ref<LocalPresetMealDay[]>(
+    currentPreset
+      ? currentPreset.days.map(day => ({
+          dayOfWeek: day.dayOfWeek,
+          meals: day.meals.map(meal => ({
+            mealId: meal.meal.id,
+            order: meal.order,
+            meal: meal.meal,
+          })),
+        }))
+      : [createInitialDay(1)],
   )
 
-  async function onSubmit(formData: IUpdateStudent | ICreateStudent) {
-    isSubmiting.value = true
-    let response = null
-    const hasChanges = ref(false)
+  const defaultValues = ref({
+    name: currentPreset?.name || '',
+    description: currentPreset?.description || '',
+  })
 
-    if (mode.value === 'edit' && currentStudent) {
-      const changedFields = getChangedFields(
-        defaultValues.value as IUpdateStudent,
-        formData as IUpdateStudent,
-      )
+  const addDay = () => {
+    if (days.value.length >= 7) {
+      toast.warning('No puedes agregar más de 7 días')
+      return
+    }
 
-      hasChanges.value = Object.keys(changedFields).length > 0
+    const existingDays = days.value.map(d => d.dayOfWeek)
+    let newDayNumber = existingDays.length + 1
 
-      if (!hasChanges.value) {
-        isSubmiting.value = false
-        toast.error('No se han modificado los campos')
-        return
+    while (existingDays.includes(newDayNumber)) {
+      newDayNumber++
+    }
+
+    days.value.push(createInitialDay(newDayNumber))
+    days.value.sort((a, b) => a.dayOfWeek - b.dayOfWeek)
+  }
+
+  const removeDay = (dayOfWeek: number) => {
+    if (days.value.length <= 1) {
+      toast.warning('Debe haber al menos un día en el plan de alimentación')
+      return
+    }
+
+    days.value = days.value.filter(day => day.dayOfWeek !== dayOfWeek)
+  }
+
+  const updateMeals = (dayIndex: number, meals: LocalPresetDayMeal[]) => {
+    if (dayIndex >= 0 && dayIndex < days.value.length) {
+      days.value[dayIndex].meals = meals
+    }
+  }
+
+  const formatDays = (days: any[]) => {
+    return days.map(day => ({
+      dayOfWeek: day.dayOfWeek,
+      meals: day.meals.map((meal: any) => ({
+        mealId: meal.mealId,
+        order: meal.order,
+      })),
+    }))
+  }
+
+  async function onSubmit(formData: { name: string; description: string }) {
+    if (days.value.some(day => day.meals.length === 0)) {
+      toast.error('Todos los días deben tener al menos una comida')
+      return
+    }
+
+    isSubmitting.value = true
+
+    try {
+      const submitData = {
+        ...formData,
+        days: formatDays(days.value),
       }
 
-      response = await StudentDataSourceImpl.getInstance().update(
-        currentStudent.id,
-        changedFields,
-      )
-    } else {
-      response = await StudentDataSourceImpl.getInstance().create({
-        ...formData,
-        trainer: user!.id,
-      } as ICreateStudent)
-    }
+      let response = null
 
-    if (response) {
-      setTimeout(() => {
-        router.back()
-        isSubmiting.value = false
-      }, 800)
+      if (mode.value === 'edit' && currentPreset) {
+        response = await PresetMealDataSourceImpl.getInstance().update(
+          currentPreset.id,
+          submitData,
+        )
+      } else {
+        response =
+          await PresetMealDataSourceImpl.getInstance().create(submitData)
+      }
+
+      if (response) {
+        setTimeout(() => {
+          router.push({ name: 'plantillas-alimentacion' })
+        }, 800)
+      }
+    } catch (error) {
+      console.error(error)
+      toast.error('Ocurrió un error al procesar la solicitud')
+    } finally {
+      isSubmitting.value = false
     }
-    isSubmiting.value = false
   }
 
   return {
-    schema: studentSchema,
+    schema: presetMealSchema,
     onSubmit,
     defaultValues,
     mode,
-    isSubmiting,
+    isSubmitting,
+    days,
+    addDay,
+    removeDay,
+    updateMeals,
   }
 }

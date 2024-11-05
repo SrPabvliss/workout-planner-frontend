@@ -3,7 +3,7 @@
     <Input
       v-model="localQuery"
       @input="onInput"
-      placeholder="Busca estudiantes..."
+      placeholder="Buscar plantillas de comidas..."
     />
   </div>
 </template>

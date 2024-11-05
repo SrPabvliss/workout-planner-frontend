@@ -20,11 +20,7 @@ defineProps<{
 
 const handleNavigaion = (href: string, current?: boolean) => {
   if (current) return
-
-  router.push({
-    name: href,
-    params: { role: router.currentRoute.value.params.role },
-  })
+  router.push({ name: href })
 }
 </script>
 

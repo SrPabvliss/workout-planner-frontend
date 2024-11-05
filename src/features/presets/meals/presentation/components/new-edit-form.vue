@@ -1,138 +1,64 @@
 <script setup lang="ts">
-import { useStudentForm } from '../../composable/use-student-form'
-import type { IStudent } from '../../interfaces/IStudent'
 import { AutoForm } from '@/components/ui/auto-form'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import Card from '@/components/ui/card/Card.vue'
+import CardContent from '@/components/ui/card/CardContent.vue'
+import ScrollArea from '@/components/ui/scroll-area/ScrollArea.vue'
+import type { IPresetMeal } from '../../interfaces/IPresetMeals'
+import MealDayCard from './meal-day-card.vue'
+import { usePresetMealForm } from '../../composable/use-student-form'
 
 const props = defineProps<{
-  student?: IStudent | null
+  preset?: IPresetMeal | null
 }>()
 
-const { schema, onSubmit, defaultValues, mode } = useStudentForm(props.student)
+const { schema, onSubmit, defaultValues, days, updateMeals, addDay } =
+  usePresetMealForm(props.preset)
 </script>
 
 <template>
-  <div class="mx-auto max-w-7xl mt-6">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <Card class="lg:col-span-2">
-        <CardHeader>
-          <CardTitle
-            >{{ mode === 'edit' ? 'Editar' : 'Nuevo' }} Estudiante</CardTitle
-          >
-        </CardHeader>
-        <CardContent>
-          <AutoForm
-            v-if="defaultValues || mode === 'new'"
-            class="space-y-4"
-            :schema="schema"
-            :initial-values="defaultValues"
-            @submit="onSubmit"
-          >
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                  <div class="col-span-1">
-                    <AutoFormField
-                      name="firstName"
-                      :field-config="{
-                        label: 'Nombre',
-                      }"
-                    />
-                  </div>
-                  <div class="col-span-1">
-                    <AutoFormField
-                      name="lastName"
-                      :field-config="{
-                        label: 'Apellido',
-                      }"
-                    />
-                  </div>
-                </div>
-                <AutoFormField
-                  name="username"
-                  :field-config="{
-                    label: 'Nombre de usuario',
-                  }"
+  <Card>
+    <CardContent>
+      <AutoForm
+        @submit="onSubmit"
+        :schema="schema"
+        :initial-values="defaultValues"
+        class="mt-6"
+        :field-config="{
+          description: {
+            label: 'Descripción',
+            component: 'textarea',
+          },
+          name: {
+            label: 'Nombre de la plantilla',
+          },
+        }"
+      >
+        <Button
+          @click="addDay"
+          @click.prevent
+          :disabled="days.length >= 7"
+          class="my-4 text-white"
+          >Agregar día</Button
+        >
+        <ScrollArea class="h-[calc(100vh-500px)]">
+          <div v-for="(day, dayIndex) in days" :key="day.dayOfWeek">
+            <Card class="mb-4">
+              <CardContent>
+                <h1 class="text-md font-semibold mb-2 mt-4">
+                  Día {{ dayIndex + 1 }}
+                </h1>
+                <MealDayCard
+                  :day="day"
+                  @update:meals="updates => updateMeals(dayIndex, updates)"
                 />
-                <AutoFormField
-                  name="email"
-                  :field-config="{
-                    label: 'Correo electrónico',
-                  }"
-                />
-              </div>
+              </CardContent>
+            </Card>
+          </div>
+        </ScrollArea>
 
-              <div class="space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                  <div class="col-span-1">
-                    <AutoFormField
-                      name="height"
-                      :field-config="{
-                        label: 'Altura (m)',
-                        inputProps: {
-                          type: 'number',
-                          step: '0.01',
-                          min: '0',
-                        },
-                      }"
-                    />
-                  </div>
-                  <div class="col-span-1">
-                    <AutoFormField
-                      name="weight"
-                      :field-config="{
-                        label: 'Peso (kg)',
-                        inputProps: {
-                          type: 'number',
-                          step: '0.1',
-                          min: '0',
-                        },
-                      }"
-                    />
-                  </div>
-                </div>
-                <AutoFormField
-                  name="medicalConditions"
-                  :field-config="{
-                    label: 'Condiciones médicas',
-                    description:
-                      'Describe cualquier condición médica relevante',
-                    component: 'textarea',
-                  }"
-                />
-                <AutoFormField
-                  name="trainedBefore"
-                  :field-config="{
-                    label: 'He entrenado antes',
-                    component: 'checkbox',
-                    description:
-                      '¿Has tenido experiencia previa con entrenamiento personal?',
-                  }"
-                />
-              </div>
-            </div>
-
-            <div class="flex justify-end mt-6">
-              <Button type="submit" class="w-full md:w-auto text-white">
-                {{ mode === 'edit' ? 'Actualizar' : 'Crear' }} Estudiante
-              </Button>
-            </div>
-          </AutoForm>
-        </CardContent>
-      </Card>
-
-      <div class="hidden lg:block">
-        <Card class="h-full">
-          <CardContent class="h-full p-0 overflow-hidden">
-            <img
-              src="https://fcdn.thg-corporate.com/thg/Nutrition_Main_84eda93d55.jpg"
-              alt="Fitness motivation"
-              class="w-full h-full object-cover rounded-xl"
-            />
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  </div>
+        <Button type="submit">Guardar Plantilla</Button>
+      </AutoForm>
+    </CardContent>
+  </Card>
 </template>
